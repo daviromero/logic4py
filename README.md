@@ -3,7 +3,7 @@
 Logic4py is a library for teaching logic
 
 ## License
-ANITA is available by [**MIT License**](https://github.com/daviromero/logic4py/blob/main/license.txt).
+Logic4py is available by [**MIT License**](https://github.com/daviromero/logic4py/blob/main/license.txt).
 
 ## Requirements:
 - You must install [rply 0.7.8 package](https://pypi.org/project/rply/)
