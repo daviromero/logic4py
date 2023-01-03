@@ -866,3 +866,107 @@ def verify_reasoning_q12(language_pt=True):
       input_conclusion = 'Não comprei mais comida.'
 #    else: 
     verify_reasoning(input_assumptions,input_conclusion, result_value=True, language_pt=language_pt)
+
+
+def verify_reasoning_fo_q1_ex(language_pt=True):
+    if language_pt:
+      input_assumptions  =['Quem gosta de voo de parapente gosta de esporte radical.','Maria gosta de voo de parapente.'] 
+      input_conclusion = 'Maria gosta de esporte radical.'
+    verify_reasoning(input_assumptions,input_conclusion, result_value=True, language_pt=language_pt)
+
+def verify_reasoning_fo_q2_ex(language_pt=True):
+    if language_pt:
+      input_assumptions  =['Quem gosta de voo de parapente gosta de esporte radical.','Maria não gosta de esporte radical.'] 
+      input_conclusion = 'Maria gosta de voo de parapente.'
+    verify_reasoning(input_assumptions,input_conclusion, result_value=False, language_pt=language_pt)
+
+def verify_reasoning_fo_q3_ex(language_pt=True):
+    if language_pt:
+      input_assumptions  =['Quem gosta de voo de parapente não gosta de chuva.','João gosta chuva.'] 
+      input_conclusion = 'João não gosta de voo de parapente.'
+    verify_reasoning(input_assumptions,input_conclusion, result_value=True, language_pt=language_pt)
+
+def verify_reasoning_fo_q4_ex(language_pt=True):
+    if language_pt:
+      input_assumptions  =['Quem gosta de voo de parapente não gosta de chuva.','João não gosta chuva.'] 
+      input_conclusion = 'João gosta de voo de parapente.'
+    verify_reasoning(input_assumptions,input_conclusion, result_value=False, language_pt=language_pt)
+
+def verify_reasoning_fo_q5_ex(language_pt=True):
+    if language_pt:
+      input_assumptions  =['Todo mundo que é amado por alguém é feliz.',
+      'Existe alguém que não é feliz.'] 
+      input_conclusion = 'Existe alguém que não é amado por ninguém.'
+    verify_reasoning(input_assumptions,input_conclusion, result_value=True, language_pt=language_pt)
+
+def verify_reasoning_fo_q1(language_pt=True):
+    if language_pt:
+      input_assumptions  =['Quem gosta de voo de parapente gosta de esporte radical.','Maria gosta de voo de parapente.'] 
+      input_conclusion = 'Maria não gosta de esporte radical.'
+    verify_reasoning(input_assumptions,input_conclusion, result_value=False, language_pt=language_pt)
+
+def verify_reasoning_fo_q2(language_pt=True):
+    if language_pt:
+      input_assumptions  =['Quem não gosta de esporte radical não gosta de voo de parapente.','Maria gosta de voo de parapente.'] 
+      input_conclusion = 'Maria gosta de esporte radical.'
+    verify_reasoning(input_assumptions,input_conclusion, result_value=True, language_pt=language_pt)
+
+def verify_reasoning_fo_q3(language_pt=True):
+    if language_pt:
+      input_assumptions  =['Quem não gosta de esporte radical não gosta de voo de parapente.','Maria não gosta de voo de parapente.'] 
+      input_conclusion = 'Maria gosta de esporte radical.'
+    verify_reasoning(input_assumptions,input_conclusion, result_value=False, language_pt=language_pt)
+
+def verify_reasoning_fo_q4(language_pt=True):
+    if language_pt:
+      input_assumptions  =['Quem gosta de voo de parapente gosta de esporte radical.','Alguém gosta de voo de parapente.'] 
+      input_conclusion = 'Alguém gosta de esporte radical.'
+    verify_reasoning(input_assumptions,input_conclusion, result_value=True, language_pt=language_pt)
+
+def verify_reasoning_fo_q5(language_pt=True):
+    if language_pt:
+      input_assumptions = ['Quem gosta de voo de parapente gosta de esporte radical.', 'Alguém gosta de esporte radical.'] 
+      input_conclusion = 'Alguém gosta de voo de parapente.'
+    verify_reasoning(input_assumptions,input_conclusion, result_value=False, language_pt=language_pt)
+
+def verify_reasoning_fo_q6(language_pt=True):
+    if language_pt:
+      input_assumptions = ['Todos que frequentam as aulas e fazem os exercícios são aprovados.', 'Todos frequentam as aulas.', 'Todos fazem os exercícios'] 
+      input_conclusion = 'Todos são aprovados.'
+    verify_reasoning(input_assumptions,input_conclusion, result_value=True, language_pt=language_pt)
+
+def verify_reasoning_fo_q7(language_pt=True):
+    if language_pt:
+      input_assumptions = ['Todos que frequentam as aulas e fazem os exercícios são aprovados.', 'Alguém frequenta as aulas e faz os exercícios.'] 
+      input_conclusion = 'Alguém é aprovado.'
+    verify_reasoning(input_assumptions,input_conclusion, result_value=True, language_pt=language_pt)
+
+def verify_reasoning_fo_q8(language_pt=True):
+    if language_pt:
+      input_assumptions = ['Todos que frequentam as aulas e fazem os exercícios são aprovados.', 'Alguém frequenta as aulas.', 'Alguém faz os exercícios'] 
+      input_conclusion = 'Alguém é aprovado.'
+    verify_reasoning(input_assumptions,input_conclusion, result_value=False, language_pt=language_pt)
+
+def verify_reasoning_fo_q9(language_pt=True):
+    if language_pt:
+      input_assumptions = ['Todos que frequentam as aulas e fazem os exercícios são aprovados.', 'Alguém foi aprovado.'] 
+      input_conclusion = 'Existe alguém que frequenta as aulas e fez os exercícios.'
+    verify_reasoning(input_assumptions,input_conclusion, result_value=False, language_pt=language_pt)
+
+def verify_reasoning_fo_q10(language_pt=True):
+    if language_pt:
+      input_assumptions = ['Todos que frequentam as aulas e fazem os exercícios são aprovados.', 'Alguém não é aprovado.'] 
+      input_conclusion = 'Existe alguém que não frequenta as aulas ou não faz os exercícios.'
+    verify_reasoning(input_assumptions,input_conclusion, result_value=True, language_pt=language_pt)
+
+def verify_reasoning_fo_q11(language_pt=True):
+    if language_pt:
+      input_assumptions = ['Todos que frequentam as aulas e fazem os exercícios são aprovados.', 'Alguém não é aprovado.'] 
+      input_conclusion = 'Existe alguém que não frequenta as aulas.'
+    verify_reasoning(input_assumptions,input_conclusion, result_value=False, language_pt=language_pt)
+
+def verify_reasoning_fo_q12(language_pt=True):
+    if language_pt:
+      input_assumptions = ['Todos que frequentam as aulas e fazem os exercícios são aprovados.', 'Alguém não é aprovado.'] 
+      input_conclusion = 'Existe alguém que não frequenta as aulas e não faz os exercícios.'
+    verify_reasoning(input_assumptions,input_conclusion, result_value=False, language_pt=language_pt)
