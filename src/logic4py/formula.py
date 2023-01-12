@@ -628,17 +628,15 @@ def truth_table(formula, premises=[], show_subformulas=True,parentheses=False):
   return df
 
 def consequence_logic(formula, premises=[], show_subformulas=True,parentheses=False):
-  df = truth_table(formula, premises=premises, show_subformulas=show_subformulas,parentheses=parentheses)
-  for index, row in df.iterrows():
-    row_premises = True
-    for f in premises:
-      if not row[f.toString()]:
-        row_premises = False
-        break
-    if(row_premises):
-      if not row[formula.toString()]:
-        return index
+  df = truth_table(formula, premisses=premises, show_subformulas=show_subformulas,parentheses=parentheses)
+  df_true = df
+  for p in premises:
+    df_true = df_true[df_true[p.toString(parentheses=parentheses)]==1]
+  for index, row in df_true.iterrows():
+    if not row[formula.toString(parentheses=parentheses)]:
+      return index
   return None
+
 
 def is_consequence_logic(formula, premises=[], show_subformulas=True,parentheses=False):
     row = consequence_logic(formula, premises=premises, show_subformulas=show_subformulas,parentheses=parentheses)
