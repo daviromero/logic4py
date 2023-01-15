@@ -633,6 +633,7 @@ def consequence_logic(formula, premises=[], show_subformulas=True,parentheses=Fa
   for p in premises:
     df_true = df_true[df_true[p.toString(parentheses=parentheses)]==1]
   for index, row in df_true.iterrows():
+    print(row[formula.toString(parentheses=parentheses)])
     if row[formula.toString(parentheses=parentheses)]==0:
       return index
   return None
