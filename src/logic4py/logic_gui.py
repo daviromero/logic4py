@@ -3,9 +3,24 @@ from IPython.display import display, Markdown
 from logic4py.parser_formula import get_formula
 from logic4py.parser_theorem import get_theorem
 from logic4py.parser_def_formula import check_proof
-from logic4py.formula import get_atoms, v_bar, get_vs, consequence_logic, truth_table, is_falsiable, is_unsatisfiable, is_satisfiable, is_valid
+from logic4py.formula import get_atoms, v_bar, get_vs, consequence_logic, truth_table, is_falsiable, is_unsatisfiable, is_satisfiable, is_valid, sat
 from random import randrange
 import traceback
+from graphviz import Digraph
+
+def visualiza_relacao(A, R, labelSet=""):
+	g = Digraph()
+	g.attr(rankdir='LR')
+
+	with g.subgraph(name='cluster_1') as c:
+		c.attr(color='blue')
+		c.node_attr.update(style='filled')
+		c.attr(label=labelSet)
+		for a1 in A:
+			c.node(str(a1))
+	for (a1,a2) in R:
+		g.edge(str(a1),str(a2))
+	return g
 
 def is_substitutable(input_formula='', input_var ='x', input_term='a', language_pt=True):
   run = widgets.Button(description="Verificar") if language_pt else widgets.Button(description="Check")
@@ -728,6 +743,125 @@ def display_truth_table_consequence_logic(input_string='', language_pt=True):
           pass
   run.on_click(on_button_run_clicked)
 
+def display_truth_formulas(formulas, universe=set(), s={}, preds={}, parentheses=False, language_pt=True):
+  layout = widgets.Layout(width='40%')
+  run = widgets.Button(description="Verificar")
+  cFormulas = [widgets.Checkbox(value=False, description=f) for f in formulas]
+  output = widgets.Output()
+  
+  try:
+      display(Markdown(fr'**Considere a interpretação:**'))
+      
+      display(Markdown(fr'- Conjunto universo: {universe}'))
+      for p_key, p_values in preds.items():
+        display(Markdown(fr'- Predicado {p_key}= {p_values}')) 
+      if len(s)>0:
+        display(Markdown(fr'- Variáveis: {", ".join([x_key+"="+x_values for x_key, x_values in s.items()])}'))
+      display(Markdown(fr'**Marque as fórmulas abaixo que são verdadeiras para a interpretação acima:**'))
+      display(*tuple(cFormulas + [run, output]))
+      l_formulas = [get_formula(f) for f in formulas]
+  except ValueError:
+      display(Markdown(r'**<font color="red">A definição de alguma das fórmulas não está correta</font>**'))
+      s = traceback.format_exc()
+      result = (s.split("@@"))[-1]
+      print (f'{result}')
+  else:
+      pass
+
+  def on_button_run_clicked(_):
+    output.clear_output()
+    with output:
+      erro = False
+      erro_formulas = []
+      formulas_sat = [sat(f,u,s,preds) for f in l_formulas]
+      
+      for i in range(len(formulas)):
+        if formulas_sat[i]!=cFormulas[i].value:
+          erro = True
+          erro_formulas.append(formulas[i])
+      if not erro:
+        display(Markdown(r'**<font color="blue">Parabéns, você acertou todas as respostas!</font>**'))
+      else:
+        display(Markdown(r'**<font color="red">Você errou as seguintes fórmulas:</font>**'))  
+        s_formulas = ', '.join(erro_formulas)
+        display(Markdown(f'{s_formulas}'))  
+  run.on_click(on_button_run_clicked)
+
+def display_graph_truth_formulas(formulas, arcs, universe=None, s={}, parentheses=False, language_pt=True, language_pt=True):
+  layout = widgets.Layout(width='40%')
+  run = widgets.Button(description="Verificar") if language_pt else widgets.Button(description="Check")
+  cFormulas = [widgets.Checkbox(value=False, description=f) for f in formulas]
+  output = widgets.Output()
+  
+  try:
+      preds={}
+      preds['E']= arcs
+      if language_pt:
+        display(Markdown(fr'**Considere o seguinte grafo:**'))
+      else:
+        display(Markdown(fr'**Consider the following graph:**'))
+        
+      if universe==None:
+        universe = set()
+        for (x,y) in arcs:
+          universe.add(x)
+          universe.add(y)      
+          
+      if language_pt:
+        display(Markdown(fr'- Conjunto universo: {universe}'))
+      else:
+        display(Markdown(fr'- Universe set: {universe}'))
+
+      display(visualiza_relacao(universe, arcs))
+      if len(s)>0:
+        if language_pt:
+          display(Markdown(fr'- Variáveis: {", ".join([x_key+"="+x_values for x_key, x_values in s.items()])}'))
+        else:
+          display(Markdown(fr'- Variables: {", ".join([x_key+"="+x_values for x_key, x_values in s.items()])}'))
+      if language_pt:
+        display(Markdown(fr'**Marque as fórmulas abaixo que são verdadeiras para o grafo acima:**'))
+      else:
+        display(Markdown(fr'**Check the formulas below which are true for the above graph:**'))
+
+      display(*tuple(cFormulas + [run, output]))
+      l_formulas = [get_formula(f) for f in formulas]
+  except ValueError:
+      if language_pt:
+        display(Markdown(r'**<font color="red">A definição de alguma das fórmulas não está correta</font>**'))
+      # s = traceback.format_exc()
+      result = (s.split("@@"))[-1]
+      print (f'{result}')
+  else:
+      pass
+
+  def on_button_run_clicked(_):
+    output.clear_output()
+    with output:
+      erro = False
+      erro_formulas = []
+      formulas_sat = [sat(f,universe,s,preds) for f in l_formulas]
+      
+      for i in range(len(formulas)):
+        if formulas_sat[i]!=cFormulas[i].value:
+          erro = True
+          erro_formulas.append(formulas[i])
+      if not erro:
+        if language_pt:
+          display(Markdown(r'**<font color="blue">Parabéns, você acertou todas as respostas!</font>**'))
+        else:
+          display(Markdown(r'**<font color="blue">Congratulations, you got the question right!</font>**'))              
+
+      else:
+        if language_pt:
+          display(Markdown(r'**<font color="red">Você errou as seguintes fórmulas:</font>**'))  
+        else:
+          display(Markdown(r'**<font color="red">You got wrong the following fórmulas:</font>**'))  
+        s_formulas = ', '.join(erro_formulas)
+        display(Markdown(f'{s_formulas}'))  
+  run.on_click(on_button_run_clicked)
+
+
+
 
 def verify_reasoning_q1_ex(language_pt=True):
     input_assumptions  =['Se está chovendo, então a rua está molhada.','Está chovendo.'] if language_pt else ["If it's raining, then the street is wet.","It's raining"]
@@ -970,3 +1104,9 @@ def verify_reasoning_fo_q12(language_pt=True):
       input_assumptions = ['Todos que frequentam as aulas e fazem os exercícios são aprovados.', 'Alguém não é aprovado.'] 
       input_conclusion = 'Existe alguém que não frequenta as aulas e não faz os exercícios.'
     verify_reasoning(input_assumptions,input_conclusion, result_value=False, language_pt=language_pt)
+
+def verify_truth_fo_graph_q1(language_pt=True):
+  formulas = ['Ex E(x,x)', 'Ax E(x,x)', 'Ax Ey E(x,y)', 'Ax Ey E(x,y)', 'Ax Ay (E(x,y)<->E(y,x))', 'Ex Ay ~E(y,x)', 'Ex Ay ~E(x,y)']
+  universe = {'a','b','c','d'}
+  arcs = {('a','b'),('b','a'),('b','c'),('c','c')}
+  display_graph_truth_formulas(formulas, arcs, universe, language_pt=language_pt)

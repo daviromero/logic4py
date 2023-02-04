@@ -19,7 +19,10 @@ setup(
     long_description_content_type='text/markdown',
     keywords='Propositional Logic, First-Order Logia, Teaching Logic, Educational Software', 
     install_requires=[
-          'rply',
+        'rply',
+        'graphviz',
+        'pandas',
+        'ipywidgets'
       ],
 
 )

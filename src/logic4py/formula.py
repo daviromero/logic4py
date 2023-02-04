@@ -562,7 +562,51 @@ def tam(formula):
   return F(formula, Tp, Tn, Tb, Tb, Tb, Tb)
 
 
-# Verfica se uma fórmula é satisfeita para uma função de valoração v
+def sat(formula, u, s, preds):
+  """" Função que testa se uma fórmula f é satisfeita em um interpretação com o universo u, predicados preds e interpretação de variáveis s.
+  """
+  if isinstance(formula, PredicateFormula):
+    if not formula.name in preds.keys():
+      raise ValueError(f"Predicado {formula.name} não está na interpretação.")  
+    for x in formula.variables:
+      if not x in s.keys():
+        raise ValueError(f"Variável {formula.name} não está na interpretação.")  
+    return 1 if (tuple([s[x] for x in formula.variables]) in preds[formula.name]) else 0
+  if isinstance(formula, AtomFormula):
+    if formula.key =='@': 
+      return 0
+    elif formula.key in preds.keys():
+      return 1 if preds[formula.key] else 0
+    else:
+      raise ValueError(f"Átomo {formula.key} não está interpretado.")    
+  elif isinstance(formula, NegationFormula):
+    return 1 if not sat(formula.formula, u, s, preds) else 0
+  elif isinstance(formula, AndFormula):
+    return 1 if sat(formula.left, u, s, preds) and sat(formula.right, u, s, preds) else 0
+  elif isinstance(formula, OrFormula):
+    return 1 if sat(formula.left, u, s, preds) or sat(formula.right, u, s, preds) else 0
+  elif isinstance(formula, ImplicationFormula):
+    return 1 if (not sat(formula.left, u, s, preds) ) or sat(formula.right, u, s, preds) else 0
+  elif isinstance(formula, BiImplicationFormula):
+    return 1 if sat(formula.left, u, s, preds) == sat(formula.right, u, s, preds) else 0
+  elif isinstance(formula, ExistentialFormula):
+    for v in u:
+      s_aux = s.copy()
+      s_aux[formula.variable]=v
+      if sat(formula.formula, u, s_aux, preds):
+        return 1
+    return 0 
+  elif isinstance(formula, UniversalFormula):
+    for v in u:
+      s_aux = s.copy()
+      s_aux[formula.variable]=v
+      if not sat(formula.formula, u, s_aux, preds):
+        return 0
+    return 1
+
+
+
+# Verfica se uma fórmula da lógica proposicional é satisfeita para uma função de valoração v
 
 def v_bar(formula, v):
   if isinstance(formula, PredicateFormula):

@@ -175,9 +175,9 @@ def get_theorem(input_theorem=''):
         return ParserTheorem.getTheorem(input_theorem)
     except ValueError:
         #s = traceback.format_exc()
-        return None
+        return None, None
     else:
-        return None
+        return None, None
         pass
 
 def theorem_toString(premisses,conclusion,parentheses=False, symbol_vdash=True):
