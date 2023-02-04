@@ -744,24 +744,37 @@ def display_truth_table_consequence_logic(input_string='', language_pt=True):
   run.on_click(on_button_run_clicked)
 
 def display_truth_formulas(formulas, universe=set(), s={}, preds={}, parentheses=False, language_pt=True):
-  layout = widgets.Layout(width='40%')
-  run = widgets.Button(description="Verificar")
+  run = widgets.Button(description="Verificar") if language_pt else widgets.Button(description="Check")
   cFormulas = [widgets.Checkbox(value=False, description=f) for f in formulas]
   output = widgets.Output()
   
   try:
       display(Markdown(fr'**Considere a interpretação:**'))
       
-      display(Markdown(fr'- Conjunto universo: {universe}'))
+      if language_pt:
+        display(Markdown(fr'- Conjunto universo: {universe}'))
+      else:
+        display(Markdown(fr'- Universe set: {universe}'))
       for p_key, p_values in preds.items():
-        display(Markdown(fr'- Predicado {p_key}= {p_values}')) 
+        if language_pt:
+          display(Markdown(fr'- Predicado {p_key}= {p_values}')) 
+        else:
+          display(Markdown(fr'- Predicate {p_key}= {p_values}')) 
+
       if len(s)>0:
-        display(Markdown(fr'- Variáveis: {", ".join([x_key+"="+x_values for x_key, x_values in s.items()])}'))
-      display(Markdown(fr'**Marque as fórmulas abaixo que são verdadeiras para a interpretação acima:**'))
+        if language_pt:
+          display(Markdown(fr'- Variáveis: {", ".join([x_key+"="+x_values for x_key, x_values in s.items()])}'))
+        else:
+          display(Markdown(fr'- Variables: {", ".join([x_key+"="+x_values for x_key, x_values in s.items()])}'))
+      if language_pt:
+        display(Markdown(fr'**Marque as fórmulas abaixo que são verdadeiras para o grafo acima:**'))
+      else:
+        display(Markdown(fr'**Check the formulas below which are true for the above graph:**'))
       display(*tuple(cFormulas + [run, output]))
       l_formulas = [get_formula(f) for f in formulas]
   except ValueError:
-      display(Markdown(r'**<font color="red">A definição de alguma das fórmulas não está correta</font>**'))
+      if language_pt:
+        display(Markdown(r'**<font color="red">A definição de alguma das fórmulas não está correta</font>**'))
       s = traceback.format_exc()
       result = (s.split("@@"))[-1]
       print (f'{result}')
@@ -773,22 +786,28 @@ def display_truth_formulas(formulas, universe=set(), s={}, preds={}, parentheses
     with output:
       erro = False
       erro_formulas = []
-      formulas_sat = [sat(f,u,s,preds) for f in l_formulas]
+      formulas_sat = [sat(f,universe,s,preds) for f in l_formulas]
       
       for i in range(len(formulas)):
         if formulas_sat[i]!=cFormulas[i].value:
           erro = True
           erro_formulas.append(formulas[i])
+
       if not erro:
-        display(Markdown(r'**<font color="blue">Parabéns, você acertou todas as respostas!</font>**'))
+        if language_pt:
+          display(Markdown(r'**<font color="blue">Parabéns, você acertou todas as respostas!</font>**'))
+        else:
+          display(Markdown(r'**<font color="blue">Congratulations, you got the question right!</font>**'))              
       else:
-        display(Markdown(r'**<font color="red">Você errou as seguintes fórmulas:</font>**'))  
+        if language_pt:
+          display(Markdown(r'**<font color="red">Você errou as seguintes fórmulas:</font>**'))  
+        else:
+          display(Markdown(r'**<font color="red">You got wrong the following fórmulas:</font>**'))  
         s_formulas = ', '.join(erro_formulas)
         display(Markdown(f'{s_formulas}'))  
   run.on_click(on_button_run_clicked)
 
 def display_graph_truth_formulas(formulas, arcs, universe=None, s={}, parentheses=False, language_pt=True, language_pt=True):
-  layout = widgets.Layout(width='40%')
   run = widgets.Button(description="Verificar") if language_pt else widgets.Button(description="Check")
   cFormulas = [widgets.Checkbox(value=False, description=f) for f in formulas]
   output = widgets.Output()
@@ -828,7 +847,7 @@ def display_graph_truth_formulas(formulas, arcs, universe=None, s={}, parenthese
   except ValueError:
       if language_pt:
         display(Markdown(r'**<font color="red">A definição de alguma das fórmulas não está correta</font>**'))
-      # s = traceback.format_exc()
+      s = traceback.format_exc()
       result = (s.split("@@"))[-1]
       print (f'{result}')
   else:
