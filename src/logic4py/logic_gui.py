@@ -1129,3 +1129,16 @@ def verify_truth_fo_graph_q1(language_pt=True):
   universe = {'a','b','c','d'}
   arcs = {('a','b'),('b','a'),('b','c'),('c','c')}
   display_graph_truth_formulas(formulas, arcs, universe, language_pt=language_pt)
+
+def verify_truth_formulas_q1(language_pt=True):
+  universe = {'Socrates','Aristoteles','Zeus', 'Heitor'}
+  s={}
+  s['s']='Socrates'
+  s['a']='Aristoteles'
+  s['z']='Zeus'
+  preds = {}
+  preds['H'] = {('Socrates'),('Aristoteles')}
+  preds['M'] = {('Socrates'),('Aristoteles')}
+
+  formulas = ['H(s)','H(z)']
+  display_truth_formulas(formulas,universe,s,preds, language_pt=language_pt)
