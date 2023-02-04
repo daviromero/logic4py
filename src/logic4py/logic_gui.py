@@ -807,7 +807,7 @@ def display_truth_formulas(formulas, universe=set(), s={}, preds={}, parentheses
         display(Markdown(f'{s_formulas}'))  
   run.on_click(on_button_run_clicked)
 
-def display_graph_truth_formulas(formulas, arcs, universe=None, s={}, parentheses=False, language_pt=True, language_pt=True):
+def display_graph_truth_formulas(formulas, arcs, universe=None, s={}, parentheses=False, language_pt=True):
   run = widgets.Button(description="Verificar") if language_pt else widgets.Button(description="Check")
   cFormulas = [widgets.Checkbox(value=False, description=f) for f in formulas]
   output = widgets.Output()
