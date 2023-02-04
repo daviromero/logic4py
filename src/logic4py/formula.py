@@ -571,7 +571,10 @@ def sat(formula, u, s, preds):
     for x in formula.variables:
       if not x in s.keys():
         raise ValueError(f"Variável {formula.name} não está na interpretação.")  
-    return 1 if (tuple([s[x] for x in formula.variables]) in preds[formula.name]) else 0
+    if(len(formula.variables)==1):
+      return 1 if s[x] in preds[formula.name] else 0
+    else: 
+      return 1 if (tuple([s[x] for x in formula.variables]) in preds[formula.name]) else 0
   if isinstance(formula, AtomFormula):
     if formula.key =='@': 
       return 0
