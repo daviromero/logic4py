@@ -631,7 +631,7 @@ def consequence_logic(formula, premises=[], show_subformulas=True,parentheses=Fa
   df = truth_table(formula, premises=premises, show_subformulas=show_subformulas,parentheses=parentheses)
   df_true = df
   for p in premises:
-    #print(p.toString())
+    print("premise"+p.toString())
     df_true = df_true[df_true[p.toString(parentheses=parentheses)]==1]
   print(df_true)
   for index, row in df_true.iterrows():
