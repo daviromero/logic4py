@@ -630,18 +630,10 @@ def truth_table(formula, premises=[], show_subformulas=True,parentheses=False):
 def consequence_logic(formula, premises=[], show_subformulas=True,parentheses=False):
   df_truth_table = truth_table(formula, premises=premises, show_subformulas=show_subformulas,parentheses=parentheses)
   df_true = df_truth_table
-  print("DF df_truth_table")
-  print(df_truth_table)
   for p in premises:
-    print("premise",p.toString())
     df_true = df_true[df_true[p.toString(parentheses=parentheses)]==1]
-  print("DF TRUE")
-  print(df_true)
   for index, row in df_true.iterrows():
-#    print(formula.toString(parentheses=parentheses), row[formula.toString(parentheses=parentheses)])
-#    print(row)
     if row[formula.toString(parentheses=parentheses)]==0:
-      print("index",index)
       return index
   return None
 
