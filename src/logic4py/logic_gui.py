@@ -3,7 +3,7 @@ from IPython.display import display, Markdown
 from logic4py.parser_formula import get_formula
 from logic4py.parser_theorem import get_theorem
 from logic4py.parser_def_formula import check_proof
-from logic4py.formula import get_atoms, v_bar, get_vs, consequence_logic, truth_table, is_falsiable, is_unsatisfiable, is_satisfiable, is_valid, sat
+from logic4py.formula import get_atoms, v_bar, get_vs, consequence_logic, truth_table, is_falsiable, is_unsatisfiable, is_satisfiable, is_valid, sat, is_countermodel
 from random import randrange
 import traceback
 from graphviz import Digraph
@@ -730,7 +730,7 @@ def display_truth_table_consequence_logic(input_string='', language_pt=True):
                   df = truth_table(conclusion,premises=premises, show_subformulas=cSubformulas.value,parentheses=cParentheses.value)
                   display(df.style.hide_index())
               else:
-                display(Markdown(fr'**<font color="red">O teorema é inválido. A linha {result} da Tabela-Verdade abaixo é um contra-exemplo.</font>**'))  
+                display(Markdown(fr'**<font color="red">O teorema é inválido. A linha {result} da Tabela-Verdade abaixo é um contraexemplo.</font>**'))  
                 df = truth_table(conclusion,premises=premises, show_subformulas=cSubformulas.value,parentheses=cParentheses.value)                
                 display(df)
           else:
@@ -743,7 +743,54 @@ def display_truth_table_consequence_logic(input_string='', language_pt=True):
           pass
   run.on_click(on_button_run_clicked)
 
-def display_truth_formulas(formulas, universe=set(), s={}, preds={}, parentheses=False, language_pt=True):
+def display_is_countermodel(input_theorem, universe=set(), s={}, preds={}, language_pt=True):
+  output = widgets.Output()
+  
+  try:
+      display(Markdown(fr'**Considere a interpretação:**'))
+      
+      if language_pt:
+        display(Markdown(fr'- Conjunto universo: {universe}'))
+      else:
+        display(Markdown(fr'- Universe set: {universe}'))
+      for p_key, p_values in preds.items():
+        if language_pt:
+          display(Markdown(fr'- Predicado {p_key}= {p_values}')) 
+        else:
+          display(Markdown(fr'- Predicate {p_key}= {p_values}')) 
+
+      if len(s)>0:
+        if language_pt:
+          display(Markdown(fr'- Variáveis: {", ".join([x_key+"="+x_values for x_key, x_values in s.items()])}'))
+        else:
+          display(Markdown(fr'- Variables: {", ".join([x_key+"="+x_values for x_key, x_values in s.items()])}'))
+      if language_pt:
+        display(Markdown(fr'**Marque as fórmulas abaixo que são verdadeiras para o grafo acima:**'))
+      else:
+        display(Markdown(fr'**Check the formulas below which are true for the above graph:**'))
+      premises, conclusion = get_theorem(input_theorem)
+
+      if is_countermodel(premises,conclusion,universe,s, preds):
+        if language_pt:
+          display(Markdown(fr'**<font color="blue">Parabéns, a interpretração acima é um contraexemplo para o teorema {input_theorem}!</font>**'))
+        else:
+          display(Markdown(fr'**<font color="blue">Congratulations, the interpretation is a countermodel of the theorem {input_theorem}!</font>**'))              
+      else:
+        if language_pt:
+          display(Markdown(r'**<font color="red">Infelizmente, você errou a questão! A interpretação não é um contraexemplo para o teorema {input_theorem}!</font>**'))  
+        else:
+          display(Markdown(r'**<font color="red">Unfortunately, you got the question wrong. The interpretation is not a countermodel of the theorem {input_theorem}!</font>**'))  
+  except ValueError:
+      if language_pt:
+        display(Markdown(r'**<font color="red">A definição de alguma das fórmulas não está correta</font>**'))
+      s = traceback.format_exc()
+      result = (s.split("@@"))[-1]
+      print (f'{result}')
+  else:
+      pass
+
+
+def display_truth_formulas(formulas, universe=set(), s={}, preds={}, language_pt=True):
   run = widgets.Button(description="Verificar") if language_pt else widgets.Button(description="Check")
   cFormulas = [widgets.Checkbox(value=False, description=f) for f in formulas]
   output = widgets.Output()
@@ -1140,5 +1187,16 @@ def verify_truth_formulas_q1(language_pt=True):
   preds['H'] = {('Socrates'),('Aristoteles')}
   preds['M'] = {('Socrates'),('Aristoteles')}
 
-  formulas = ['H(s)','H(z)']
+  formulas = ['H(s)','H(z)', 'Ex M(x)', 'Ax H(x)', 'Ax M(x)', 'Ax (H(x)->M(x))']
   display_truth_formulas(formulas,universe,s,preds, language_pt=language_pt)
+
+
+def verify_countermodel_q1(language_pt=True):
+  universe = {0,1,2,3,4,5}
+  s={}
+  preds = {}
+  preds['P'] = {(0),(2),(4)}
+  preds['I'] = {(1),(3),(5)}
+
+  input_theorem = 'Ax (P(x) | I(x)) |= Ax P(x) | Ax I(x)'
+  display_is_countermodel(input_theorem,universe,s,preds, language_pt=language_pt)
