@@ -764,10 +764,6 @@ def display_is_countermodel(input_theorem, universe=set(), s={}, preds={}, langu
           display(Markdown(fr'- Variáveis: {", ".join([x_key+"="+x_values for x_key, x_values in s.items()])}'))
         else:
           display(Markdown(fr'- Variables: {", ".join([x_key+"="+x_values for x_key, x_values in s.items()])}'))
-      if language_pt:
-        display(Markdown(fr'**Marque as fórmulas abaixo que são verdadeiras para o grafo acima:**'))
-      else:
-        display(Markdown(fr'**Check the formulas below which are true for the above graph:**'))
       premises, conclusion = get_theorem(input_theorem)
 
       if is_countermodel(premises,conclusion,universe,s, preds):
