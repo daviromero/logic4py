@@ -576,7 +576,7 @@ def sat(formula, u, s, preds):
       raise ValueError(f"Predicado {formula.name} não está na interpretação.")  
     for x in formula.variables:
       if not x in s.keys():
-        raise ValueError(f"Variável {formula.name} não está na interpretação.")  
+        raise ValueError(f"Variável {x} não está na interpretação.")  
     if(len(formula.variables)==1):
       return 1 if s[x] in preds[formula.name] else 0
     else: 
