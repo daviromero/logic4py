@@ -482,6 +482,38 @@ def get_atoms(formula):
   elif isinstance(formula, QuantifierFormula ):
     return get_atoms(formula.formula)
 
+
+def get_predicates(formula):
+  if isinstance(formula, AtomFormula) :
+    return set()#{formula.key}
+  elif isinstance(formula, PredicateFormula):
+    return {formula}
+  elif isinstance(formula, NegationFormula ):
+    r1 = get_subformulas(formula.formula)
+    r_set = r1.union({formula})
+    return r_set    
+  elif isinstance(formula, BinaryFormula ):
+    r1 = get_subformulas(formula.left)
+    r2 = get_subformulas(formula.right)
+    r_set = r1.union(r2)
+    r_set = r_set.union({formula})
+    return r_set    
+  elif isinstance(formula, QuantifierFormula ):
+    r1 = get_subformulas(formula.formula)
+    r_set = r1.union({formula})
+    return r_set    
+
+def get_signature_predicates(formula):
+  preds = get_predicates(formula)
+  signature = {}
+  for p in preds:
+    if not p.name in signature.keys():
+      signature[p.name] = len(p.variables) 
+    else:
+      if signature[p.name] != len(p.variables)
+        raise ValueError(f"Predicado {p.name} aparece com cardinalidade diferentes ({signature[p.name]} e {len(p.variables)})")
+  return signature
+
 def get_subformulas(formula):
   if isinstance(formula, AtomFormula) or isinstance(formula, PredicateFormula):
     return {formula}
