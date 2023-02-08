@@ -1042,9 +1042,8 @@ def display_countermodel(input_theorem, language_pt=True):
       for dVar in free_variables:
         s[dVar] = w_variables[i].value
         i+=1
+      universe = parser_lista_strings(input_universe.value)
       with output_result:
-        display(preds)
-        display(s)
         if is_countermodel(premises,conclusion,universe,s, preds):
           if language_pt:
             display(Markdown(fr'**<font color="blue">Parabéns, a interpretração acima é um contraexemplo para o teorema {input_theorem}!</font>**'))
