@@ -953,7 +953,7 @@ def display_countermodel(input_theorem, language_pt=True):
   continue_universe = widgets.Button(description="Continuar")
   input_universe = widgets.Textarea(
       value='',
-      placeholder='Digite o universo (separado por vírgula)',
+      placeholder='Digite o universo (separado por espaço)',
       description='',
       layout=layout
       )
