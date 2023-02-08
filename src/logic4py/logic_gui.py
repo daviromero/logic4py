@@ -1019,13 +1019,14 @@ def display_countermodel(input_theorem, language_pt=True):
       display(widgets.HBox(w_preds))
 
     with output_variables:
-      i=0
-      for x in free_variables:
-        w_variables[i].options= universe
-        i+=1
-      text_var = Markdown(fr'**Para cada variável abaixo, selecione a interpretação da variável.**')
-      display(text_var)
-      display(widgets.HBox(w_variables))
+      if len(free_variables)>0:
+        i=0
+        for x in free_variables:
+          w_variables[i].options= universe
+          i+=1
+        text_var = Markdown(fr'**Para cada variável abaixo, selecione a interpretação da variável.**')
+        display(text_var)
+        display(widgets.HBox(w_variables))
     with output_run:
       display(Markdown(fr'**Verifique se a interpretação acima é um contraexemplo para o teorema**'))
       display(run)
