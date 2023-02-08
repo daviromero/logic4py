@@ -750,11 +750,11 @@ def display_is_countermodel(input_theorem, universe=set(), s={}, preds={}, langu
       display(Markdown(fr'**Considere a interpretação:**'))
       
       if language_pt:
-        display(Markdown(fr"- Conjunto universo: {'{'+', '.join(list(universe))+'}'}"))
+        display(Markdown(fr"- Conjunto universo: {'{'+', '.join(sorted(list(universe)))+'}'}"))
       else:
-        display(Markdown(fr"- Universe set: {'{'+', '.join(list(universe))+'}'}"))
+        display(Markdown(fr"- Universe set: {'{'+', '.join(sorted(list(universe)))+'}'}"))
       for p_key, p_values in preds.items():
-        s_values = '{'+', '.join(['('+','.join([k for k in r])+')' for r in list(p_values)])+'}'
+        s_values = '{'+', '.join(['('+','.join([k for k in r])+')' for r in sorted(list(p_values))])+'}'
         if language_pt:
           
           display(Markdown(fr"- Predicado {p_key}= {s_values}")) 
