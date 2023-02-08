@@ -754,7 +754,7 @@ def display_is_countermodel(input_theorem, universe=set(), s={}, preds={}, langu
       else:
         display(Markdown(fr"- Universe set: {'{'+', '.join(sorted(list(universe)))+'}'}"))
       for p_key, p_values in preds.items():
-        s_values = '{'+', '.join(['('+','.join([k for k in r])+')' for r in sorted(list(p_values))])+'}'
+        s_values = '{'+', '.join(['('+','.join([k for k in r])+')' if type(r)==tuple else '('+r+')' for r in sorted(list(p_values))])+'}'
         if language_pt:          
           display(Markdown(fr"- Predicado {p_key}= {s_values}")) 
         else:
@@ -800,7 +800,7 @@ def display_truth_formulas(formulas, universe=set(), s={}, preds={}, language_pt
       else:
         display(Markdown(fr"- Universe set: {'{'+', '.join(sorted(list(universe)))+'}'}"))
       for p_key, p_values in preds.items():
-        s_values = '{'+', '.join(['('+','.join([k for k in r])+')' for r in sorted(list(p_values))])+'}'
+        s_values = '{'+', '.join(['('+','.join([k for k in r])+')' if type(r)==tuple else '('+r+')' for r in sorted(list(p_values))])+'}'
         if language_pt:
           display(Markdown(fr'- Predicado {p_key}= {s_values}')) 
         else:
@@ -1009,7 +1009,10 @@ def display_countermodel(input_theorem, language_pt=True):
         pc = produto_cartesiano(universe, signature_preds[p])
         d_pc ={}
         for r in pc:
-          d_pc['('+','.join([k for k in r])+')'] = r
+          if type(r)!=tuple:
+            d_pc['('+r+')'] = r  
+          else:
+            d_pc['('+','.join([k for k in r])+')'] = r
         w_preds[i].options = d_pc 
         i+=1
       display(text_pred)
