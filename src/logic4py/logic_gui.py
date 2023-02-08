@@ -3,7 +3,7 @@ from IPython.display import display, Markdown
 from logic4py.parser_formula import get_formula
 from logic4py.parser_theorem import get_theorem
 from logic4py.parser_def_formula import check_proof
-from logic4py.formula import get_atoms, v_bar, get_vs, consequence_logic, truth_table, is_falsiable, is_unsatisfiable, is_satisfiable, is_valid, sat, is_countermodel
+from logic4py.formula import get_atoms, v_bar, get_vs, consequence_logic, truth_table, is_falsiable, is_unsatisfiable, is_satisfiable, is_valid, sat, is_countermodel, get_signature_predicates
 from random import randrange
 import traceback
 from graphviz import Digraph
@@ -755,8 +755,7 @@ def display_is_countermodel(input_theorem, universe=set(), s={}, preds={}, langu
         display(Markdown(fr"- Universe set: {'{'+', '.join(sorted(list(universe)))+'}'}"))
       for p_key, p_values in preds.items():
         s_values = '{'+', '.join(['('+','.join([k for k in r])+')' for r in sorted(list(p_values))])+'}'
-        if language_pt:
-          
+        if language_pt:          
           display(Markdown(fr"- Predicado {p_key}= {s_values}")) 
         else:
           display(Markdown(fr"- Predicate {p_key}= {s_values}")) 
@@ -797,14 +796,15 @@ def display_truth_formulas(formulas, universe=set(), s={}, preds={}, language_pt
       display(Markdown(fr'**Considere a interpretação:**'))
       
       if language_pt:
-        display(Markdown(fr'- Conjunto universo: {universe}'))
+        display(Markdown(fr"- Conjunto universo: {'{'+', '.join(sorted(list(universe)))+'}'}"))
       else:
-        display(Markdown(fr'- Universe set: {universe}'))
+        display(Markdown(fr"- Universe set: {'{'+', '.join(sorted(list(universe)))+'}'}"))
       for p_key, p_values in preds.items():
+        s_values = '{'+', '.join(['('+','.join([k for k in r])+')' for r in sorted(list(p_values))])+'}'
         if language_pt:
-          display(Markdown(fr'- Predicado {p_key}= {p_values}')) 
+          display(Markdown(fr'- Predicado {p_key}= {s_values}')) 
         else:
-          display(Markdown(fr'- Predicate {p_key}= {p_values}')) 
+          display(Markdown(fr'- Predicate {p_key}= {s_values}')) 
 
       if len(s)>0:
         if language_pt:
@@ -872,9 +872,9 @@ def display_graph_truth_formulas(formulas, arcs, universe=None, s={}, parenthese
           universe.add(y)      
           
       if language_pt:
-        display(Markdown(fr'- Conjunto universo: {universe}'))
+        display(Markdown(fr"- Conjunto universo: {'{'+', '.join(sorted(list(universe)))+'}'}"))
       else:
-        display(Markdown(fr'- Universe set: {universe}'))
+        display(Markdown(fr"- Universe set: {'{'+', '.join(sorted(list(universe)))+'}'}"))
 
       display(visualiza_relacao(universe, arcs))
       if len(s)>0:
@@ -924,6 +924,137 @@ def display_graph_truth_formulas(formulas, arcs, universe=None, s={}, parenthese
         display(Markdown(f'{s_formulas}'))  
   run.on_click(on_button_run_clicked)
 
+
+def parser_lista_strings(s):
+  C_string = [x for x in s.strip().split(' ') if x!='']
+  return [ int(x.strip()) if x.isdigit() else x.strip() for x in C_string] if C_string!=[''] else set()
+
+def parser_conjunto_tuplas_strings(s):
+  tuplas = [tuple(parser_lista_strings(x)) for x in s.strip().split(';')]
+  return set(tuplas) if tuplas !=[()] else set() 
+
+def produto_cartesiano(A, size):
+  R = []
+  A = list(A)  
+  if size==1:
+    return A
+  for i in range(len(A)**size):
+    R.append(tuple([A[i // (len(A)**(size-j-1)) % len(A)] for j in range(size)]))
+  return R
+
+
+def display_countermodel(input_theorem, language_pt=True):
+  output = widgets.Output()
+  output_interpretation = widgets.Output()
+  output_variables = widgets.Output()
+  output_run = widgets.Output()
+  output_result = widgets.Output()
+  layout = widgets.Layout(width='70%')
+  continue_universe = widgets.Button(description="Continuar")
+  input_universe = widgets.Textarea(
+      value='',
+      placeholder='Digite o universo (separado por vírgula)',
+      description='',
+      layout=layout
+      )
+  run = widgets.Button(description="Verificar")
+  display(Markdown(fr'**Considere o teorema {input_theorem} e apresente um contraexemplo para o teorema:**'))
+
+  premises, conclusion = get_theorem(input_theorem)
+  signature_preds = get_signature_predicates(conclusion)
+  for prem in premises:
+    signature_preds.update(get_signature_predicates(prem))
+  w_preds = []
+  l_preds = list(signature_preds.keys())
+  for p in l_preds:
+    w_preds.append(widgets.SelectMultiple(
+      options=[],
+      value=[],
+      description=f'Predicado {p}',
+      disabled=False
+      ))
+
+  free_variables = conclusion.free_variables()
+  for prem in premises:
+    free_variables = free_variables.union(prem.free_variables())
+  free_variables=list(free_variables)
+  w_variables = []
+  for x in free_variables:
+    w_variables.append(widgets.Dropdown(
+      options=[],#universe,
+      description=f'Variável {x}',
+      disabled=False
+      ))
+
+  input_universe.value = 'a b c'
+  display(Markdown(fr'**Entre com o conjunto universo:**'))
+  display(widgets.HBox([input_universe, continue_universe]))
+
+  display(output)
+  display(output_interpretation)
+  display(output_variables)
+  display(output_run)
+  display(output_result)
+
+  
+  def on_button_continue_universe_clicked(_):
+    output_interpretation.clear_output()
+    with output_interpretation:
+      input_universe.disabled = True
+      continue_universe.disabled = True
+      universe = parser_lista_strings(input_universe.value)
+      text_pred = Markdown(fr'**Para cada predicado abaixo, marque as tuplas que são válidas para o predicato.**')
+      i=0
+      for p in l_preds:
+        pc = produto_cartesiano(universe, signature_preds[p])
+        d_pc ={}
+        for r in pc:
+          d_pc['('+','.join([k for k in r])+')'] = r
+        w_preds[i].options = d_pc 
+        i+=1
+      display(text_pred)
+      display(widgets.HBox(w_preds))
+
+    with output_variables:
+      i=0
+      for x in free_variables:
+        w_variables[i].options= universe
+        i+=1
+      text_var = Markdown(fr'**Para cada variável abaixo, selecione a interpretação da variável.**')
+      display(text_var)
+      display(widgets.HBox(w_variables))
+    with output_run:
+      display(Markdown(fr'**Verifique se a interpretação acima é um contraexemplo para o teorema**'))
+      display(run)
+
+  def on_button_run_clicked(_):
+      output_result.clear_output()
+      preds = dict()
+      i = 0
+      for pred in l_preds:
+        preds[pred] = set(w_preds[i].value)
+        i+=1
+      s = dict()
+      i = 0
+      for dVar in free_variables:
+        s[dVar] = w_variables[i].value
+        i+=1
+      with output_result:
+        display(preds)
+        display(s)
+        if is_countermodel(premises,conclusion,universe,s, preds):
+          if language_pt:
+            display(Markdown(fr'**<font color="blue">Parabéns, a interpretração acima é um contraexemplo para o teorema {input_theorem}!</font>**'))
+          else:
+            display(Markdown(fr'**<font color="blue">Congratulations, the interpretation is a countermodel of the theorem {input_theorem}!</font>**'))              
+        else:
+          if language_pt:
+            display(Markdown(fr'**<font color="red">Infelizmente, você errou a questão! A interpretação não é um contraexemplo para o teorema {input_theorem}!</font>**'))  
+          else:
+            display(Markdown(fr'**<font color="red">Unfortunately, you got the question wrong. The interpretation is not a countermodel of the theorem {input_theorem}!</font>**'))  
+      
+  continue_universe.on_click(on_button_continue_universe_clicked)
+  run.on_click(on_button_run_clicked)
 
 
 
