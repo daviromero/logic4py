@@ -981,12 +981,12 @@ def display_countermodel(input_theorem, language_pt=True):
   w_variables = []
   for x in free_variables:
     w_variables.append(widgets.Dropdown(
-      options=[],#universe,
+      options=[],
       description=f'Variável {x}',
       disabled=False
       ))
 
-  input_universe.value = 'a b c'
+  input_universe.value = ''
   display(Markdown(fr'**Entre com o conjunto universo:**'))
   display(widgets.HBox([input_universe, continue_universe]))
 
