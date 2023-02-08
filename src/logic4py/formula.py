@@ -510,7 +510,7 @@ def get_signature_predicates(formula):
     if not p.name in signature.keys():
       signature[p.name] = len(p.variables) 
     else:
-      if signature[p.name] != len(p.variables)
+      if signature[p.name] != len(p.variables):
         raise ValueError(f"Predicado {p.name} aparece com cardinalidade diferentes ({signature[p.name]} e {len(p.variables)})")
   return signature
 
