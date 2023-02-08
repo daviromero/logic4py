@@ -489,19 +489,14 @@ def get_predicates(formula):
   elif isinstance(formula, PredicateFormula):
     return {formula}
   elif isinstance(formula, NegationFormula ):
-    r1 = get_subformulas(formula.formula)
-    r_set = r1.union({formula})
-    return r_set    
+    return get_predicates(formula.formula)
   elif isinstance(formula, BinaryFormula ):
-    r1 = get_subformulas(formula.left)
-    r2 = get_subformulas(formula.right)
+    r1 = get_predicates(formula.left)
+    r2 = get_predicates(formula.right)
     r_set = r1.union(r2)
-    r_set = r_set.union({formula})
     return r_set    
   elif isinstance(formula, QuantifierFormula ):
-    r1 = get_subformulas(formula.formula)
-    r_set = r1.union({formula})
-    return r_set    
+    return get_predicates(formula.formula)
 
 def get_signature_predicates(formula):
   preds = get_predicates(formula)
