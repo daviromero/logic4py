@@ -1003,7 +1003,7 @@ def display_countermodel(input_theorem, language_pt=True):
       input_universe.disabled = True
       continue_universe.disabled = True
       universe = parser_lista_strings(input_universe.value)
-      text_pred = Markdown(fr'**Para cada predicado abaixo, marque as tuplas que são válidas para o predicato.**')
+      text_pred = Markdown(fr'**Para cada predicado abaixo, marque as tuplas que são válidas para o predicado.**')
       i=0
       for p in l_preds:
         pc = produto_cartesiano(universe, signature_preds[p])
