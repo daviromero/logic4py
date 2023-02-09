@@ -774,9 +774,9 @@ def display_is_countermodel(input_theorem, universe=set(), s={}, preds={}, langu
           display(Markdown(fr'**<font color="blue">Congratulations, the interpretation is a countermodel of the theorem {input_theorem}!</font>**'))              
       else:
         if language_pt:
-          display(Markdown(r'**<font color="red">Infelizmente, você errou a questão! A interpretação não é um contraexemplo para o teorema {input_theorem}!</font>**'))  
+          display(Markdown(fr'**<font color="red">Infelizmente, você errou a questão! A interpretação não é um contraexemplo para o teorema {input_theorem}!</font>**'))  
         else:
-          display(Markdown(r'**<font color="red">Unfortunately, you got the question wrong. The interpretation is not a countermodel of the theorem {input_theorem}!</font>**'))  
+          display(Markdown(fr'**<font color="red">Unfortunately, you got the question wrong. The interpretation is not a countermodel of the theorem {input_theorem}!</font>**'))  
   except ValueError:
       if language_pt:
         display(Markdown(r'**<font color="red">A definição de alguma das fórmulas não está correta</font>**'))
