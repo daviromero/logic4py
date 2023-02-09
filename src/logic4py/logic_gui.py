@@ -958,7 +958,7 @@ def display_countermodel(input_theorem, language_pt=True):
       layout=layout
       )
   run = widgets.Button(description="Verificar")
-  display(Markdown(fr'**Considere o teorema {input_theorem} e apresente um contraexemplo para o teorema:**'))
+  display(Markdown(fr'**Apresente um contraexemplo para o teorema {input_theorem}**'))
 
   premises, conclusion = get_theorem(input_theorem)
   signature_preds = get_signature_predicates(conclusion)
