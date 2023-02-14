@@ -34,9 +34,9 @@ def is_substitutable(input_formula='', input_var ='x', input_term='a', language_
   wButtons = widgets.HBox([run])
 
   if language_pt:
-    display(Markdown(rf'**A variável {input_var} é substituível pelo termo {input_term} na fórmula {input_formula}:**'))
+    display(Markdown(rf'**O termo {input_term} é substituível para a variável {input_var} na fórmula {input_formula}:**'))
   else:
-    display(Markdown(rf'**Variable {input_var} is substitutable by the term {input_term} in the formula {input_formula}:**'))
+    display(Markdown(rf'**The term {input_term} is substitutable for the variable {input_var} in the formula {input_formula}:**'))
   display(cResult, wButtons, output)
 
   def on_button_run_clicked(_):
@@ -48,17 +48,17 @@ def is_substitutable(input_formula='', input_var ='x', input_term='a', language_
             if (f.is_substitutable(input_var,input_term) and (cResult.value=='Sim' or cResult.value=='Yes')):
               if language_pt:
                display(Markdown(r'**<font color="blue">Parabéns você acertou a questão!</font>**')) 
-               display(Markdown(rf'A variável {input_var} **é substituível** pelo termo {input_term} na fórmula {input_formula}.'))                          
+               display(Markdown(rf'O termo {input_term} **é substituível** para a variável {input_var} na fórmula {input_formula}.'))
               else:
-                display(Markdown(r'**<font color="blue">Congratulations, you got the question right!</font>**'))              
-                display(Markdown(rf'The variable {input_var} **is substitutable** by the term {input_term} in the formula {input_formula}.'))              
+                display(Markdown(r'**<font color="blue">Congratulations, you got the question right!</font>**'))
+                display(Markdown(rf'The term {input_term} **is substitutable** for the variable {input_var} in the formula {input_formula}.'))
             elif not f.is_substitutable(input_var,input_term) and (cResult.value=='Não' or cResult.value=='No'):
               if language_pt:
                 display(Markdown(r'**<font color="blue">Parabéns você acertou a questão!</font>**'))              
-                display(Markdown(rf'A variável {input_var} **não é substituível** pelo termo {input_term} na fórmula {input_formula}.')) 
+                display(Markdown(rf'O termo {input_term} **não é substituível** para a variável {input_var} na fórmula {input_formula}.'))
               else:
                 display(Markdown(r'**<font color="blue">Congratulations you got the question right!</font>**'))              
-                display(Markdown(rf'The variable {input_var} **is not substitutable** by the term {input_term} in the formula {input_formula}.')) 
+                display(Markdown(rf'The term {input_term} **is not substitutable** for the variable {input_var} in the formula {input_formula}.'))
             else:
               if language_pt:
                 display(Markdown(rf'**<font color="red">Infelizmente, você errou a questão.</font>**'))
