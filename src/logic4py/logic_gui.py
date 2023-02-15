@@ -939,12 +939,12 @@ def produto_cartesiano(A, size):
     R.append(tuple([A[i // (len(A)**(size-j-1)) % len(A)] for j in range(size)]))
   return R
 
-def display_countermodel_decoder(input_theorem, height_layout='300px', language_pt=True):
+def display_countermodel_decoder(input_theorem, input_interpretation = '', height_layout='300px', language_pt=True):
   layout = widgets.Layout(width='90%', height=height_layout)
   output = widgets.Output()
   run = widgets.Button(description="Verificar" if language_pt else "Check")
   input = widgets.Textarea(
-      value='',
+      value=input_interpretation,
       placeholder='Digite a interpretação' if language_pt else 'Enter the interpretation',
       description='',
       layout=layout
@@ -955,45 +955,46 @@ def display_countermodel_decoder(input_theorem, height_layout='300px', language_
     display(Markdown(fr'**Define a countermodel for the theorem {input_theorem}**')) 
   premises, conclusion = get_theorem(input_theorem)
   signature_preds = get_signature_predicates(conclusion, premises)
-  # for prem in premises:
-  #   signature_preds.update(get_signature_predicates(prem))
   l_preds = sorted(list(signature_preds.keys()))
-
-  if language_pt:
-    input_string = "#Defina o conjunto universo:\nU = {...}\n#Defina os predicados:"
-  else: 
-    input_string = "#Set the universe set:\nU = {...}\n#Set the Predicates:"
-  for p in l_preds:
-      for arity in signature_preds[p]:
-        input_string+=f"\n{p} = "+"{("+','.join([' ' for x in range(arity)])+"), ...}"
-  if language_pt:
-    input_string += "\n#Defina as variáveis:"
-  else: 
-    input_string += "\n#Set the variables:"
-  free_variables = conclusion.free_variables()
-  for prem in premises:
-    free_variables = free_variables.union(prem.free_variables())
-  free_variables=sorted(list(free_variables))
-  for x in free_variables:
-    input_string+=f"\n{x} = "
-  input.value = input_string
+  if input_interpretation!='':
+    if language_pt:
+      input_string = "#Defina o conjunto universo:\nU = {}\n#Defina os predicados:"
+    else: 
+      input_string = "#Set the universe set:\nU = {}\n#Set the Predicates:"
+    for p in l_preds:
+        for arity in signature_preds[p]:
+          input_string+=f"\n{p} = "+"{("+','.join([' ' for x in range(arity)])+"), }"
+    if language_pt:
+      input_string += "\n#Defina as variáveis:"
+    else: 
+      input_string += "\n#Set the variables:"
+    free_variables = conclusion.free_variables()
+    for prem in premises:
+      free_variables = free_variables.union(prem.free_variables())
+    free_variables=sorted(list(free_variables))
+    for x in free_variables:
+      input_string+=f"\n{x} = "
+    input.value = input_string
   display(input, run, output)
-  # print(input_string)
   def on_button_run_clicked(_):
     output.clear_output()
     with output:
-      universe, preds, s  = decode_fo_interpretation(input.value)
-      print(universe, preds, s)
-      if is_countermodel(premises,conclusion,universe,s, preds):
-        if language_pt:
-          display(Markdown(fr'**<font color="blue">Parabéns, a interpretração acima é um contraexemplo para o teorema {input_theorem}!</font>**'))
+      try:
+        universe, preds, s  = decode_fo_interpretation(input.value)
+        if is_countermodel(premises,conclusion,universe,s, preds):
+          if language_pt:
+            display(Markdown(fr'**<font color="blue">Parabéns, a interpretração acima é um contraexemplo para o teorema {input_theorem}!</font>**'))
+          else:
+            display(Markdown(fr'**<font color="blue">Congratulations, the interpretation is a countermodel of the theorem {input_theorem}!</font>**'))              
         else:
-          display(Markdown(fr'**<font color="blue">Congratulations, the interpretation is a countermodel of the theorem {input_theorem}!</font>**'))              
+          if language_pt:
+            display(Markdown(fr'**<font color="red">Infelizmente, você errou a questão! A interpretação não é um contraexemplo para o teorema {input_theorem}!</font>**'))  
+          else:
+            display(Markdown(fr'**<font color="red">Unfortunately, you got the question wrong. The interpretation is not a countermodel of the theorem {input_theorem}!</font>**'))  
+      except ValueError as error:
+        display(Markdown(fr'**<font color="red">{error}</font>**'))   
       else:
-        if language_pt:
-          display(Markdown(fr'**<font color="red">Infelizmente, você errou a questão! A interpretação não é um contraexemplo para o teorema {input_theorem}!</font>**'))  
-        else:
-          display(Markdown(fr'**<font color="red">Unfortunately, you got the question wrong. The interpretation is not a countermodel of the theorem {input_theorem}!</font>**'))  
+          pass
   run.on_click(on_button_run_clicked)
 
 
