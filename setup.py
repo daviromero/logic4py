@@ -22,7 +22,8 @@ setup(
         'rply',
         'graphviz',
         'pandas',
-        'ipywidgets'
+        'ipywidgets',
+        'ruamel.yaml'
       ],
 
 )
