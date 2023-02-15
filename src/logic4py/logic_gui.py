@@ -779,8 +779,8 @@ def display_is_countermodel(input_theorem, universe=set(), s={}, preds={}, langu
         else:
           display(Markdown(fr'**<font color="red">Unfortunately, you got the question wrong. The interpretation is not a countermodel of the theorem {input_theorem}!</font>**'))  
   except ValueError as error:
-      
-    print(error)
+    display(Markdown(fr'**<font color="red">{error}</font>**'))   
+    # print(error)
       # if language_pt:
       #   display(Markdown(r'**<font color="red">A definição de alguma das fórmulas não está correta</font>**'))
       # s = traceback.format_exc()
