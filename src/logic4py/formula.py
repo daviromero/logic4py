@@ -603,7 +603,9 @@ def sat(formula, u, s, preds):
       raise ValueError(f"Predicado {formula.name} não está na interpretação.")  
     for x in formula.variables:
       if not x in s.keys():
-        raise ValueError(f"Variável {x} não está na interpretação.")  
+        raise ValueError(f"Variável {x} não está na interpretação.")
+      elif not s[x] in u:
+        raise ValueError(f"Variável {x}={s[x]} não está no conjunto universo.") 
     if(len(formula.variables)==1):
       return 1 if s[x] in preds[formula.name] else 0
     else: 
@@ -639,8 +641,6 @@ def sat(formula, u, s, preds):
       if not sat(formula.formula, u, s_aux, preds):
         return 0
     return 1
-
-
 
 # Verfica se uma fórmula da lógica proposicional é satisfeita para uma função de valoração v
 
