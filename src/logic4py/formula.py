@@ -498,16 +498,35 @@ def get_predicates(formula):
   elif isinstance(formula, QuantifierFormula ):
     return get_predicates(formula.formula)
 
-def get_signature_predicates(formula):
-  preds = get_predicates(formula)
+                                                    
+def get_signature_predicates(conclusion, premises=[]):
+  preds = get_predicates(conclusion)
   signature = {}
   for p in preds:
     if not p.name in signature.keys():
-      signature[p.name] = len(p.variables) 
+      signature[p.name] = [len(p.variables)]
     else:
-      if signature[p.name] != len(p.variables):
-        raise ValueError(f"Predicado {p.name} aparece com cardinalidade diferentes ({signature[p.name]} e {len(p.variables)})")
+      signature[p.name].append(len(p.variables))
+  for f in premises:
+    preds = get_predicates(f)
+    for p in preds:
+      if not p.name in signature.keys():
+        signature[p.name] = [len(p.variables)]
+      else:
+        signature[p.name].append(len(p.variables))
+      # if signature[p.name] != len(p.variables):
+      #   raise ValueError(f"Predicado {p.name} aparece com cardinalidade diferentes ({signature[p.name]} e {len(p.variables)})")
   return signature
+# def get_signature_predicates(formula):
+#   preds = get_predicates(formula)
+#   signature = {}
+#   for p in preds:
+#     if not p.name in signature.keys():
+#       signature[p.name] = len(p.variables) 
+#     else:
+#       if signature[p.name] != len(p.variables):
+#         raise ValueError(f"Predicado {p.name} aparece com cardinalidade diferentes ({signature[p.name]} e {len(p.variables)})")
+#   return signature
 
 def get_subformulas(formula):
   if isinstance(formula, AtomFormula) or isinstance(formula, PredicateFormula):
@@ -599,17 +618,18 @@ def sat(formula, u, s, preds):
   """" Função que testa se uma fórmula f é satisfeita em um interpretação com o universo u, predicados preds e interpretação de variáveis s.
   """
   if isinstance(formula, PredicateFormula):
-    if not formula.name in preds.keys():
-      raise ValueError(f"Predicado {formula.name} não está na interpretação.")  
+    arity = len(formula.variables)
+    if not (formula.name, arity) in preds.keys():
+      raise ValueError(f"Predicado {formula.name} com aridade {arity} não está na interpretação.")  
     for x in formula.variables:
       if not x in s.keys():
         raise ValueError(f"Variável {x} não está na interpretação.")
       elif not s[x] in u:
         raise ValueError(f"Variável {x}={s[x]} não está no conjunto universo.") 
     if(len(formula.variables)==1):
-      return 1 if s[x] in preds[formula.name] else 0
+      return 1 if s[x] in preds[formula.name, arity] else 0
     else: 
-      return 1 if (tuple([s[x] for x in formula.variables]) in preds[formula.name]) else 0
+      return 1 if (tuple([s[x] for x in formula.variables]) in preds[formula.name, arity]) else 0
   if isinstance(formula, AtomFormula):
     if formula.key =='@': 
       return 0

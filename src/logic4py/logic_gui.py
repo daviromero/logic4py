@@ -780,12 +780,6 @@ def display_is_countermodel(input_theorem, universe=set(), s={}, preds={}, langu
           display(Markdown(fr'**<font color="red">Unfortunately, you got the question wrong. The interpretation is not a countermodel of the theorem {input_theorem}!</font>**'))  
   except ValueError as error:
     display(Markdown(fr'**<font color="red">{error}</font>**'))   
-    # print(error)
-      # if language_pt:
-      #   display(Markdown(r'**<font color="red">A definição de alguma das fórmulas não está correta</font>**'))
-      # s = traceback.format_exc()
-      # result = (s.split("@@"))[-1]
-      # print (f'{result}')
   else:
       pass
 
@@ -960,9 +954,9 @@ def display_countermodel_decoder(input_theorem, height_layout='300px', language_
   else:
     display(Markdown(fr'**Define a countermodel for the theorem {input_theorem}**')) 
   premises, conclusion = get_theorem(input_theorem)
-  signature_preds = get_signature_predicates(conclusion)
-  for prem in premises:
-    signature_preds.update(get_signature_predicates(prem))
+  signature_preds = get_signature_predicates(conclusion, premises)
+  # for prem in premises:
+  #   signature_preds.update(get_signature_predicates(prem))
   l_preds = sorted(list(signature_preds.keys()))
 
   if language_pt:
@@ -970,7 +964,8 @@ def display_countermodel_decoder(input_theorem, height_layout='300px', language_
   else: 
     input_string = "#Set the universe set:\nU = {...}\n#Set the Predicates:"
   for p in l_preds:
-      input_string+=f"\n{p} = "+"{("+','.join([' ' for x in range(signature_preds[p])])+"), ...}"
+      for arity in signature_preds[p]:
+        input_string+=f"\n{p} = "+"{("+','.join([' ' for x in range(arity)])+"), ...}"
   if language_pt:
     input_string += "\n#Defina as variáveis:"
   else: 
@@ -1020,18 +1015,19 @@ def display_countermodel(input_theorem, language_pt=True):
   display(Markdown(fr'**Apresente um contraexemplo para o teorema {input_theorem}**'))
 
   premises, conclusion = get_theorem(input_theorem)
-  signature_preds = get_signature_predicates(conclusion)
-  for prem in premises:
-    signature_preds.update(get_signature_predicates(prem))
+  signature_preds = get_signature_predicates(conclusion,premises)
+  # for prem in premises:
+  #   signature_preds.update(get_signature_predicates(prem))
   w_preds = []
-  l_preds = list(signature_preds.keys())
+  l_preds = sorted(list(signature_preds.keys()))
   for p in l_preds:
-    w_preds.append(widgets.SelectMultiple(
-      options=[],
-      value=[],
-      description=f'Predicado {p}',
-      disabled=False
-      ))
+    for arity in signature_preds[p]:
+      w_preds.append(widgets.SelectMultiple(
+        options=[],
+        value=[],
+        description=f'Predicado {p}',
+        disabled=False
+        ))
 
   free_variables = conclusion.free_variables()
   for prem in premises:
@@ -1065,15 +1061,16 @@ def display_countermodel(input_theorem, language_pt=True):
       text_pred = Markdown(fr'**Para cada predicado abaixo, marque as tuplas que são válidas para o predicado.**')
       i=0
       for p in l_preds:
-        pc = produto_cartesiano(universe, signature_preds[p])
-        d_pc ={}
-        for r in pc:
-          if type(r)!=tuple:
-            d_pc['('+r+')'] = r  
-          else:
-            d_pc['('+','.join([k for k in r])+')'] = r
-        w_preds[i].options = d_pc 
-        i+=1
+        for arity in signature_preds[p]:
+          pc = produto_cartesiano(universe, arity)
+          d_pc ={}
+          for r in pc:
+            if type(r)!=tuple:
+              d_pc['('+r+')'] = r  
+            else:
+              d_pc['('+','.join([k for k in r])+')'] = r
+          w_preds[i].options = d_pc 
+          i+=1
       display(text_pred)
       display(widgets.HBox(w_preds))
 
@@ -1095,8 +1092,9 @@ def display_countermodel(input_theorem, language_pt=True):
       preds = dict()
       i = 0
       for pred in l_preds:
-        preds[pred] = set(w_preds[i].value)
-        i+=1
+        for arity in signature_preds[p]:
+          preds[pred,arity] = set(w_preds[i].value)
+          i+=1
       s = dict()
       i = 0
       for dVar in free_variables:
