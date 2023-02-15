@@ -14,7 +14,7 @@ def decode_fo_interpretation(input_fo_interpretatio, universe_key='U'):
     elif key[0].isupper():
       if '_' in key:
         s_key, s_arity = key.split('_')
-        arity = (s_arity)
+        arity = int(s_arity)
       else:
         s_key = key
         if len(data[key])==0:
@@ -38,14 +38,14 @@ def decode_fo_interpretation(input_fo_interpretatio, universe_key='U'):
             raise ValueError(f'No predicado {key}, {t} deveria fazer parte do conjunto universo')
           elif type(t)==list and not t[0] in U:
             raise ValueError(f'No predicado {key}, {t[0]} deveria fazer parte do conjunto universo')
-      preds[s_key,str(arity)] = set()
+      preds[s_key,arity] = set()
       for t in data[key]:
         if (type(t)!=list):
-          preds[s_key,str(arity)].add(t)
+          preds[s_key,arity].add(t)
         elif (type(t)==list and len(t)==1):
-          preds[s_key,str(arity)].add(t[0])
+          preds[s_key,arity].add(t[0])
         else:  
-          preds[s_key,str(arity)].add(tuple([str(k) for k in t]))
+          preds[s_key,arity].add(tuple([str(k) for k in t]))
     else:
       if data[key] in U:
         s[key] = data[key]
