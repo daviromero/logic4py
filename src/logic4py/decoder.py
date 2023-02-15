@@ -27,7 +27,8 @@ def decode_fo_interpretation(input_fo_interpretatio, universe_key='U'):
           elif len(t)!=arity:
             raise ValueError(f'No predicado {key}, a tupla {tuple(t)} deve ter tamanho {arity}')
           for k in t:
-            if not k in U:
+            if not str(k) in U:
+              print(k,U)
               raise ValueError(f'No predicado {key}, o elemento {k} da tupla {tuple(t)} deveria fazer parte do conjunto universo')
       elif arity==1:
         for t in data[key]:
@@ -40,9 +41,9 @@ def decode_fo_interpretation(input_fo_interpretatio, universe_key='U'):
       preds[s_key,arity] = set()
       for t in data[key]:
         if (type(t)!=list):
-          preds[s_key,arity].add(t)
+          preds[s_key,arity].add(str(t))
         elif (type(t)==list and len(t)==1):
-          preds[s_key,arity].add(t[0])
+          preds[s_key,arity].add(str(t[0]))
         else:  
           preds[s_key,arity].add(tuple([str(k) for k in t]))
     else:

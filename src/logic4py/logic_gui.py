@@ -956,7 +956,7 @@ def display_countermodel_decoder(input_theorem, input_interpretation = '', heigh
   premises, conclusion = get_theorem(input_theorem)
   signature_preds = get_signature_predicates(conclusion, premises)
   l_preds = sorted(list(signature_preds.keys()))
-  if input_interpretation!='':
+  if input_interpretation=='':
     if language_pt:
       input_string = "#Defina o conjunto universo:\nU = {}\n#Defina os predicados:"
     else: 
