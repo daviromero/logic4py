@@ -856,7 +856,7 @@ def display_graph_truth_formulas(formulas, arcs, universe=None, s={}, parenthese
   
   try:
       preds={}
-      preds['E']= arcs
+      preds['E',2]= arcs
       if language_pt:
         display(Markdown(fr'**Considere o seguinte grafo:**'))
       else:
@@ -1373,8 +1373,8 @@ def verify_truth_formulas_q1(language_pt=True):
   s['a']='Aristoteles'
   s['z']='Zeus'
   preds = {}
-  preds['H'] = {('Socrates'),('Aristoteles')}
-  preds['M'] = {('Socrates'),('Aristoteles')}
+  preds['H',1] = {('Socrates'),('Aristoteles')}
+  preds['M',1] = {('Socrates'),('Aristoteles')}
 
   formulas = ['H(s)','H(z)', 'Ex M(x)', 'Ax H(x)', 'Ax M(x)', 'Ax (H(x)->M(x))']
   display_truth_formulas(formulas,universe,s,preds, language_pt=language_pt)
@@ -1384,8 +1384,8 @@ def verify_countermodel_q1(language_pt=True):
   universe = {'0','1','2','3','4','5'}
   s={}
   preds = {}
-  preds['P'] = {('0'),('2'),('4')}
-  preds['I'] = {('1'),('3'),('5')}
+  preds['P',1] = {('0'),('2'),('4')}
+  preds['I',1] = {('1'),('3'),('5')}
 
   input_theorem = 'Ax (P(x) | I(x)) |= Ax P(x) | Ax I(x)'
   display_is_countermodel(input_theorem,universe,s,preds, language_pt=language_pt)
