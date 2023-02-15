@@ -963,17 +963,18 @@ def display_countermodel_decoder(input_theorem, input_interpretation = '', heigh
       input_string = "#Set the universe set:\nU = {}\n#Set the Predicates:"
     for p in l_preds:
         for arity in signature_preds[p]:
-          input_string+=f"\n{p} = "+"{("+','.join([' ' for x in range(arity)])+"), }"
-    if language_pt:
-      input_string += "\n#Defina as variáveis:"
-    else: 
-      input_string += "\n#Set the variables:"
+          input_string+=f"\n{p} = "+"{("+','.join([' ' for x in range(arity)])+")}"
     free_variables = conclusion.free_variables()
     for prem in premises:
       free_variables = free_variables.union(prem.free_variables())
     free_variables=sorted(list(free_variables))
-    for x in free_variables:
-      input_string+=f"\n{x} = "
+    if len(free_variables)>0:
+      if language_pt:
+        input_string += "\n#Defina as variáveis:"
+      else: 
+        input_string += "\n#Set the variables:"
+      for x in free_variables:
+        input_string+=f"\n{x} = "
     input.value = input_string
   display(input, run, output)
   def on_button_run_clicked(_):
