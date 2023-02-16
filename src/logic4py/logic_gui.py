@@ -1012,20 +1012,21 @@ def display_countermodel(input_theorem, language_pt=True):
   layout = widgets.Layout(width='70%')
   layout2 = widgets.Layout(width='150px')
   layout3 = widgets.Layout(width='180px')
-  continue_universe = widgets.Button(description="Continuar")
+  continue_universe = widgets.Button(description="Continuar" if language_pt else "Continue")
   input_universe = widgets.Textarea(
       value='',
-      placeholder='Digite o universo (separado por espaço)',
+      placeholder='Digite o universo (separado por espaço)' if language_pt else "Enter the universe set",
       description='',
       layout=layout
       )
-  run = widgets.Button(description="Verificar")
-  display(Markdown(fr'**Apresente um contraexemplo para o teorema {input_theorem}**'))
+  run = widgets.Button(description="Verificar" if language_pt else "Check")
+  if language_pt:
+    display(Markdown(fr'**Apresente um contraexemplo para o teorema {input_theorem}**'))
+  else:
+    display(Markdown(fr'**Define a countermodel for the theorem {input_theorem}**')) 
 
   premises, conclusion = get_theorem(input_theorem)
   signature_preds = get_signature_predicates(conclusion,premises)
-  # for prem in premises:
-  #   signature_preds.update(get_signature_predicates(prem))
   w_preds = []
   l_preds = sorted(list(signature_preds.keys()))
   for p in l_preds:
@@ -1033,7 +1034,7 @@ def display_countermodel(input_theorem, language_pt=True):
       w_preds.append(widgets.SelectMultiple(
         options=[],
         value=[],
-        description=f'Predicado {p}',
+        description=f'Predicado {p}' if language_pt else f'Predicate {p}',
         layout=layout3,
         disabled=False
         ))
@@ -1043,7 +1044,7 @@ def display_countermodel(input_theorem, language_pt=True):
     w_atoms.append(widgets.Dropdown(
       options=[('1',1),('0',0)],
       value=1,
-      description=f'Predicado {p}',
+      description=f'Predicado {p}' if language_pt else f'Predicate {p}',
       layout=layout2,
       disabled=False
       ))
@@ -1055,13 +1056,16 @@ def display_countermodel(input_theorem, language_pt=True):
   for x in free_variables:
     w_variables.append(widgets.Dropdown(
       options=[],
-      description=f'Variável {x}',
+      description=f'Variável {x}' if language_pt else f'Variable {p}',
       layout=layout2,
       disabled=False
       ))
 
   input_universe.value = ''
-  display(Markdown(fr'**Entre com o conjunto universo:**'))
+  if language_pt:
+    display(Markdown(fr'**Entre com o conjunto universo:**'))
+  else:
+    display(Markdown(fr'**Enter the universe set:**'))
   display(widgets.HBox([input_universe, continue_universe]))
 
   display(output)
@@ -1077,7 +1081,10 @@ def display_countermodel(input_theorem, language_pt=True):
       input_universe.disabled = True
       continue_universe.disabled = True
       universe = parser_lista_strings(input_universe.value)
-      text_pred = Markdown(fr'**Para cada predicado abaixo, marque as tuplas que são válidas para o predicado.**')
+      if language_pt:
+        text_pred = Markdown(fr'**Para cada predicado abaixo, marque as tuplas que são válidas para o predicado.**')
+      else:
+        text_pred = Markdown(fr'**For each predicate below, check the tuples that are true for the predicate.**')
       i=0
       for p in l_preds:
         for arity in signature_preds[p]:
@@ -1100,11 +1107,14 @@ def display_countermodel(input_theorem, language_pt=True):
         for x in free_variables:
           w_variables[i].options= universe
           i+=1
-        text_var = Markdown(fr'**Para cada variável abaixo, selecione a interpretação da variável.**')
+        if language_pt:
+          text_var = Markdown(fr'**Para cada variável abaixo, selecione a interpretação da variável.**')
+        else:
+          text_var = Markdown(fr'**For each variable below, select the interpretation for the variable.**')
         display(text_var)
         display(widgets.HBox(w_variables))
     with output_run:
-      display(Markdown(fr'**Verifique se a interpretação acima é um contraexemplo para o teorema**'))
+      # display(Markdown(fr'**Verifique se a interpretação acima é um contraexemplo para o teorema**'))
       display(run)
 
   def on_button_run_clicked(_):
