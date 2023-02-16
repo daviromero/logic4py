@@ -1107,7 +1107,7 @@ def display_countermodel(input_theorem, language_pt=True):
       preds = dict()
       i = 0
       for pred in l_preds:
-        for arity in signature_preds[p]:
+        for arity in signature_preds[pred]:
           preds[pred,arity] = set(w_preds[i].value)
           i+=1
       i = 0
