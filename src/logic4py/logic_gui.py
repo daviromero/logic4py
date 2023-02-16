@@ -1010,7 +1010,7 @@ def display_countermodel(input_theorem, language_pt=True):
   output_run = widgets.Output()
   output_result = widgets.Output()
   layout = widgets.Layout(width='70%')
-  layout2 = widgets.Layout(width='30px')
+  layout2 = widgets.Layout(width='150px')
   continue_universe = widgets.Button(description="Continuar")
   input_universe = widgets.Textarea(
       value='',
