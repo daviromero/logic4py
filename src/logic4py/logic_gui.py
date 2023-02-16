@@ -3,7 +3,7 @@ from IPython.display import display, Markdown
 from logic4py.parser_formula import get_formula
 from logic4py.parser_theorem import get_theorem
 from logic4py.parser_def_formula import check_proof
-from logic4py.formula import get_atoms, v_bar, get_vs, consequence_logic, truth_table, is_falsiable, is_unsatisfiable, is_satisfiable, is_valid, sat, is_countermodel, get_signature_predicates
+from logic4py.formula import get_atoms, v_bar, get_vs, consequence_logic, truth_table, is_falsiable, is_unsatisfiable, is_satisfiable, is_valid, sat, is_countermodel, get_signature_predicates, get_propositional_atoms, get_signature_propositional_atoms
 from logic4py.decoder import decode_fo_interpretation
 from random import randrange
 import traceback
@@ -1034,7 +1034,15 @@ def display_countermodel(input_theorem, language_pt=True):
         description=f'Predicado {p}',
         disabled=False
         ))
-
+  w_atoms = []  
+  l_atoms = sorted(list(get_signature_propositional_atoms(conclusion,premises)))
+  for p in l_atoms:
+    w_atoms.append(widgets.Dropdown(
+      options=['1':1,'0':0],
+      value=1,
+      description=f'Predicado {p}',
+      disabled=False
+      ))
   free_variables = conclusion.free_variables()
   for prem in premises:
     free_variables = free_variables.union(prem.free_variables())
@@ -1078,7 +1086,8 @@ def display_countermodel(input_theorem, language_pt=True):
           w_preds[i].options = d_pc 
           i+=1
       display(text_pred)
-      display(widgets.HBox(w_preds))
+      display(widgets.HBox(w_preds+w_atoms))
+      # display(widgets.HBox(w_atoms))
 
     with output_variables:
       if len(free_variables)>0:
@@ -1101,6 +1110,10 @@ def display_countermodel(input_theorem, language_pt=True):
         for arity in signature_preds[p]:
           preds[pred,arity] = set(w_preds[i].value)
           i+=1
+      i = 0
+      for pred in l_atoms:
+        preds[pred] = w_atoms[i].value
+        i+=1
       s = dict()
       i = 0
       for dVar in free_variables:

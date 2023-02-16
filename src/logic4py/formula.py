@@ -471,7 +471,6 @@ def num_atom_atoms(formula, atom):
 def get_atoms(formula):
   if isinstance(formula, AtomFormula) or isinstance(formula, PredicateFormula) :
     return {formula}
-#    return {formula.toString()}
   elif isinstance(formula, NegationFormula ):
     return get_atoms(formula.formula)
   elif isinstance(formula, BinaryFormula ):
@@ -482,6 +481,23 @@ def get_atoms(formula):
   elif isinstance(formula, QuantifierFormula ):
     return get_atoms(formula.formula)
 
+def get_propositional_atoms(formula):
+  if isinstance(formula, AtomFormula) :
+    if isinstance(formula, BottonFormula): 
+      return set()
+    else:
+      return {formula}
+  elif isinstance(formula, PredicateFormula):
+    return set()
+  elif isinstance(formula, NegationFormula ):
+    return get_propositional_atoms(formula.formula)
+  elif isinstance(formula, BinaryFormula ):
+    r1 = get_propositional_atoms(formula.left)
+    r2 = get_propositional_atoms(formula.right)
+    r_set = r1.union(r2)
+    return r_set    
+  elif isinstance(formula, QuantifierFormula ):
+    return get_propositional_atoms(formula.formula)
 
 def get_predicates(formula):
   if isinstance(formula, AtomFormula) :
@@ -514,19 +530,18 @@ def get_signature_predicates(conclusion, premises=[]):
         signature[p.name] = [len(p.variables)]
       elif not len(p.variables) in signature[p.name] :
         signature[p.name].append(len(p.variables))
-      # if signature[p.name] != len(p.variables):
-      #   raise ValueError(f"Predicado {p.name} aparece com cardinalidade diferentes ({signature[p.name]} e {len(p.variables)})")
   return signature
-# def get_signature_predicates(formula):
-#   preds = get_predicates(formula)
-#   signature = {}
-#   for p in preds:
-#     if not p.name in signature.keys():
-#       signature[p.name] = len(p.variables) 
-#     else:
-#       if signature[p.name] != len(p.variables):
-#         raise ValueError(f"Predicado {p.name} aparece com cardinalidade diferentes ({signature[p.name]} e {len(p.variables)})")
-#   return signature
+
+def get_signature_propositional_atoms(conclusion, premises=[]):
+  preds = get_propositional_atoms(conclusion)
+  signature = {}
+  for p in preds:
+    signature.add(p.name)
+  for f in premises:
+    preds = get_propositional_atoms(f)
+    for p in preds:
+      signature.add(p.name)
+  return signature
 
 def get_subformulas(formula):
   if isinstance(formula, AtomFormula) or isinstance(formula, PredicateFormula):
