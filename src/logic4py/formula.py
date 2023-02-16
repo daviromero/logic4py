@@ -534,7 +534,7 @@ def get_signature_predicates(conclusion, premises=[]):
 
 def get_signature_propositional_atoms(conclusion, premises=[]):
   preds = get_propositional_atoms(conclusion)
-  signature = {}
+  signature = set()
   for p in preds:
     signature.add(p.name)
   for f in premises:
