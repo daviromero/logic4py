@@ -672,9 +672,10 @@ def display_formula_is_true(input_formula='', v=None, parentheses=False, respons
         v = vs[randrange(0,len(vs))]
 
       if(formula!=None):
-        sV = ''
-        for a in atoms:
-          sV+= '~~$v('+a+') = '+str(int(v[a]))+'$,'
+        # sV = ''
+        # for a in atoms:
+        #   sV+= '~~$v('+a+') = '+str(int(v[a]))+'$,'
+        sV = '~~'+',~'.join([f'v({a}) = {v[a]}' for a in atoms])
         display(Markdown(fr'**Considere a função de valoração:**'))
         display(Markdown(fr'${sV}$'))
         display(Markdown(fr'**Marque o item abaixo se a fórmula ${formula.toLatex(parentheses=parentheses)}$ é verdadeira para a função de valoração.**'))
