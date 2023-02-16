@@ -536,11 +536,11 @@ def get_signature_propositional_atoms(conclusion, premises=[]):
   preds = get_propositional_atoms(conclusion)
   signature = set()
   for p in preds:
-    signature.add(p.name)
+    signature.add(p.key)
   for f in premises:
     preds = get_propositional_atoms(f)
     for p in preds:
-      signature.add(p.name)
+      signature.add(p.key)
   return signature
 
 def get_subformulas(formula):
