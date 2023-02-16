@@ -1056,7 +1056,7 @@ def display_countermodel(input_theorem, language_pt=True):
   for x in free_variables:
     w_variables.append(widgets.Dropdown(
       options=[],
-      description=f'Variável {x}' if language_pt else f'Variable {p}',
+      description=f'Variável {x}' if language_pt else f'Variable {x}',
       layout=layout2,
       disabled=False
       ))
