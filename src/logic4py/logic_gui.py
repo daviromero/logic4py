@@ -1038,7 +1038,7 @@ def display_countermodel(input_theorem, language_pt=True):
   l_atoms = sorted(list(get_signature_propositional_atoms(conclusion,premises)))
   for p in l_atoms:
     w_atoms.append(widgets.Dropdown(
-      options=['1':1,'0':0],
+      options=[('1',1),('0',0)],
       value=1,
       description=f'Predicado {p}',
       disabled=False
