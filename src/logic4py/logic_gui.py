@@ -1010,6 +1010,7 @@ def display_countermodel(input_theorem, language_pt=True):
   output_run = widgets.Output()
   output_result = widgets.Output()
   layout = widgets.Layout(width='70%')
+  layout2 = widgets.Layout(width='30px')
   continue_universe = widgets.Button(description="Continuar")
   input_universe = widgets.Textarea(
       value='',
@@ -1032,6 +1033,7 @@ def display_countermodel(input_theorem, language_pt=True):
         options=[],
         value=[],
         description=f'Predicado {p}',
+        layout=layout2,
         disabled=False
         ))
   w_atoms = []  
@@ -1041,17 +1043,19 @@ def display_countermodel(input_theorem, language_pt=True):
       options=[('1',1),('0',0)],
       value=1,
       description=f'Predicado {p}',
+      layout=layout2,
       disabled=False
       ))
   free_variables = conclusion.free_variables()
   for prem in premises:
     free_variables = free_variables.union(prem.free_variables())
-  free_variables=list(free_variables)
+  free_variables=sorted(list(free_variables))
   w_variables = []
   for x in free_variables:
     w_variables.append(widgets.Dropdown(
       options=[],
       description=f'Variável {x}',
+      layout=layout2,
       disabled=False
       ))
 
