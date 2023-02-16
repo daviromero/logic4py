@@ -1011,6 +1011,7 @@ def display_countermodel(input_theorem, language_pt=True):
   output_result = widgets.Output()
   layout = widgets.Layout(width='70%')
   layout2 = widgets.Layout(width='150px')
+  layout3 = widgets.Layout(width='180px')
   continue_universe = widgets.Button(description="Continuar")
   input_universe = widgets.Textarea(
       value='',
@@ -1033,7 +1034,7 @@ def display_countermodel(input_theorem, language_pt=True):
         options=[],
         value=[],
         description=f'Predicado {p}',
-        layout=layout2,
+        layout=layout3,
         disabled=False
         ))
   w_atoms = []  
