@@ -756,7 +756,10 @@ def display_is_countermodel(input_theorem, universe=set(), s={}, preds={}, langu
       else:
         display(Markdown(fr"- Universe set: {'{'+', '.join(sorted(list(universe)))+'}'}"))
       for p_key, p_values in preds.items():
-        s_values = '{'+', '.join(['('+','.join([k for k in r])+')' if type(r)==tuple else '('+r+')' for r in sorted(list(p_values))])+'}'
+        if p_values==1 or p_values==0:
+           s_values = str(p_values)
+        else:
+           s_values = '{'+', '.join(['('+','.join([k for k in r])+')' if type(r)==tuple else '('+r+')' for r in sorted(list(p_values))])+'}'
         if language_pt:          
           display(Markdown(fr"- Predicado {p_key[0]}= {s_values}")) 
         else:

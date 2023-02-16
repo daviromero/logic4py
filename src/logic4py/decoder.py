@@ -10,6 +10,8 @@ def decode_fo_interpretation(input_fo_interpretatio, universe_key='U'):
   for key in data.keys():
     if key==universe_key:
       continue
+    elif key[0].isupper() and (data[key]==1 or data[key]==0):
+      preds[key] = data[key]
     elif key[0].isupper():
       if '_' in key:
         s_key, s_arity = key.split('_')
