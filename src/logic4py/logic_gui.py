@@ -301,7 +301,7 @@ def verify_reasoning(input_assumptions, input_conclusion, result_value=False, la
         description=r'Resposta:' if language_pt else r'Answer:',
         disabled=False
     )
-    questao = r'<b>Considere as seguintes afirmações:' if language_pt else r'<b>Consider the following statements:'
+    questao = r'<b>Considere as seguintes afirmações:</b>' if language_pt else r'<b>Consider the following statements:</b>'
     i = 1
     for assumption in input_assumptions:
         questao += f'\n1. {assumption}'
@@ -749,24 +749,24 @@ def display_is_countermodel(input_theorem, universe=set(), s={}, preds={}, langu
       display(HTML(fr'<b>Considere a interpretação:'))
       
       if language_pt:
-        display(HTML(fr"- Conjunto universo: {'{'+', '.join(sorted(list(universe)))+'}'}"))
+        display(HTML(fr"<b>- Conjunto universo:</b> {'{'+', '.join(sorted(list(universe)))+'}'}"))
       else:
-        display(HTML(fr"- Universe set: {'{'+', '.join(sorted(list(universe)))+'}'}"))
+        display(HTML(fr"<b>- Universe set:</b> {'{'+', '.join(sorted(list(universe)))+'}'}"))
       for p_key, p_values in preds.items():
         if p_values==1 or p_values==0:
            s_values = str(p_values)
         else:
            s_values = '{'+', '.join(['('+','.join([k for k in r])+')' if type(r)==tuple else '('+r+')' for r in sorted(list(p_values))])+'}'
         if language_pt:          
-          display(HTML(fr"- Predicado {p_key[0]}= {s_values}")) 
+          display(HTML(fr"<b>- Predicado {p_key[0]}</b> = {s_values}")) 
         else:
-          display(HTML(fr"- Predicate {p_key[0]}= {s_values}")) 
+          display(HTML(fr"<b>- Predicate {p_key[0]}</b> = {s_values}")) 
 
       if len(s)>0:
         if language_pt:
-          display(HTML(fr'<b>- Variáveis: {", ".join([x_key+"="+x_values for x_key, x_values in s.items()])}'))
+          display(HTML(fr'<b>- Variáveis:</b> {", ".join([x_key+"="+x_values for x_key, x_values in s.items()])}'))
         else:
-          display(HTML(fr'<b>- Variables: {", ".join([x_key+"="+x_values for x_key, x_values in s.items()])}'))
+          display(HTML(fr'<b>- Variables:</b> {", ".join([x_key+"="+x_values for x_key, x_values in s.items()])}'))
       premises, conclusion = get_theorem(input_theorem)
 
       if is_countermodel(premises,conclusion,universe,s, preds):
