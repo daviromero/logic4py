@@ -35,9 +35,9 @@ def is_substitutable(input_formula='', input_var ='x', input_term='a', language_
   wButtons = widgets.HBox([run])
 
   if language_pt:
-    display(HTML(rf'O termo {input_term} é substituível para a variável {input_var} na fórmula {input_formula}:'))
+    display(HTML(rf'<b>O termo {input_term} é substituível para a variável {input_var} na fórmula {input_formula}:'))
   else:
-    display(HTML(rf'The term {input_term} is substitutable for the variable {input_var} in the formula {input_formula}:'))
+    display(HTML(rf'<b>The term {input_term} is substitutable for the variable {input_var} in the formula {input_formula}:'))
   display(cResult, wButtons, output)
 
   def on_button_run_clicked(_):
@@ -48,28 +48,28 @@ def is_substitutable(input_formula='', input_var ='x', input_term='a', language_
           if(f!=None):
             if (f.is_substitutable(input_var,input_term) and (cResult.value=='Sim' or cResult.value=='Yes')):
               if language_pt:
-               display(HTML(r'<font color="blue">Parabéns você acertou a questão!</font>')) 
-               display(HTML(rf'O termo {input_term} é substituível para a variável {input_var} na fórmula {input_formula}.'))
+               display(HTML(r'<b><font color="blue">Parabéns você acertou a questão!</font>')) 
+               display(HTML(rf'<b>O termo {input_term} é substituível para a variável {input_var} na fórmula {input_formula}.'))
               else:
-                display(HTML(r'<font color="blue">Congratulations, you got the question right!</font>'))
-                display(HTML(rf'The term {input_term} is substitutable for the variable {input_var} in the formula {input_formula}.'))
+                display(HTML(r'<b><b><font color="blue">Congratulations, you got the question right!</font>'))
+                display(HTML(rf'<b>The term {input_term} is substitutable for the variable {input_var} in the formula {input_formula}.'))
             elif not f.is_substitutable(input_var,input_term) and (cResult.value=='Não' or cResult.value=='No'):
               if language_pt:
-                display(HTML(r'<font color="blue">Parabéns você acertou a questão!</font>'))              
-                display(HTML(rf'O termo {input_term} não é substituível para a variável {input_var} na fórmula {input_formula}.'))
+                display(HTML(r'<b><b><font color="blue">Parabéns você acertou a questão!</font>'))              
+                display(HTML(rf'<b>O termo {input_term} não é substituível para a variável {input_var} na fórmula {input_formula}.'))
               else:
-                display(HTML(r'<font color="blue">Congratulations you got the question right!</font>'))              
-                display(HTML(rf'The term {input_term} is not substitutable for the variable {input_var} in the formula {input_formula}.'))
+                display(HTML(r'<b><b><font color="blue">Congratulations you got the question right!</font>'))              
+                display(HTML(rf'<b>The term {input_term} is not substitutable for the variable {input_var} in the formula {input_formula}.'))
             else:
               if language_pt:
-                display(HTML(rf'<font color="red">Infelizmente, você errou a questão.</font>'))
+                display(HTML(rf'<b><font color="red">Infelizmente, você errou a questão.</font>'))
               else:
-                display(HTML(rf'<font color="red">Unfortunately, you got the question wrong.</font>'))
+                display(HTML(rf'<b><font color="red">Unfortunately, you got the question wrong.</font>'))
           else:
             if language_pt:
-              display(HTML(r'<font color="red">A definição da fórmula não está correta, verifique se todas regras foram aplicadas corretamente. <br>Lembre-se que uma fórmula é definida pela seguinte BNF: <br>F :== P | ~ P | P & Q | P | Q | P -> Q | P <-> Q | (P), <br>onde P,Q (em caixa alta) são átomos.</font>'))
+              display(HTML(r'<b><b><font color="red">A definição da fórmula não está correta, verifique se todas regras foram aplicadas corretamente. <br>Lembre-se que uma fórmula é definida pela seguinte BNF: <br>F :== P | ~ P | P & Q | P | Q | P -> Q | P <-> Q | (P), <br>onde P,Q (em caixa alta) são átomos.</font>'))
             else:
-              display(HTML(r'<font color="red">The formula definition is not correct, check if all rules are applied correctly. Remember that a formula is defined by the following BNF: F :== P | ~ P | Q & Q | P | Q | P -> Q | P <-> Q | (P), where P,Q (in capital letters) are atoms.</font>'))
+              display(HTML(r'<b><b><font color="red">The formula definition is not correct, check if all rules are applied correctly. Remember that a formula is defined by the following BNF: F :== P | ~ P | Q & Q | P | Q | P -> Q | P <-> Q | (P), where P,Q (in capital letters) are atoms.</font>'))
   
       except ValueError:
           s = traceback.format_exc()
@@ -92,11 +92,11 @@ def verify_variables(input_string='', input_formula = '', language_pt=True):
   wButtons = widgets.HBox([run])
   
   if language_pt:
-    display(HTML(rf'Digite o conjunto de variávels da fórmula {input_formula}:'))
-    display(HTML(r'Cada elemento do seu conjunto deve ser separado por ; (ponto-e-vírgula)'))
+    display(HTML(rf'<b>Digite o conjunto de variávels da fórmula {input_formula}:'))
+    display(HTML(r'<b><b>Cada elemento do seu conjunto deve ser separado por ; (ponto-e-vírgula)'))
   else:
-    display(HTML(rf'Enter the set of variables of the formula {input_formula}:'))
-    display(HTML(r'Each element of your set must be separated by ; (semicolon)'))
+    display(HTML(rf'<b>Enter the set of variables of the formula {input_formula}:'))
+    display(HTML(r'<b><b>Each element of your set must be separated by ; (semicolon)'))
   display(input, wButtons, output)
 
   def on_button_run_clicked(_):
@@ -110,17 +110,17 @@ def verify_variables(input_string='', input_formula = '', language_pt=True):
               if language_pt:
                 display(HTML('<font color="blue">Parabéns, você acertou a questão.</font>'))
               else:
-                display(HTML(r'<font color="blue">Congratulations, you got the question right!</font>'))              
+                display(HTML(r'<b><b><font color="blue">Congratulations, you got the question right!</font>'))              
             else:
               if language_pt:
-                display(HTML(r'<font color="red">Infelizmente, você errou a questão.</font>'))
+                display(HTML(r'<b><b><font color="red">Infelizmente, você errou a questão.</font>'))
               else:
-                display(HTML(r'<font color="red">Unfortunately, you got the question wrong.</font>'))
+                display(HTML(r'<b><b><font color="red">Unfortunately, you got the question wrong.</font>'))
           else:
             if language_pt:
-              display(HTML(r'<font color="red">A definição da fórmula não está correta, verifique se todas regras foram aplicadas corretamente. <br>Lembre-se que uma fórmula é definida pela seguinte BNF: <br>F :== P | ~ P | P & Q | P | Q | P -> Q | P <-> Q | (P), <br>onde P,Q (em caixa alta) são átomos.</font>'))
+              display(HTML(r'<b><b><font color="red">A definição da fórmula não está correta, verifique se todas regras foram aplicadas corretamente. <br>Lembre-se que uma fórmula é definida pela seguinte BNF: <br>F :== P | ~ P | P & Q | P | Q | P -> Q | P <-> Q | (P), <br>onde P,Q (em caixa alta) são átomos.</font>'))
             else:
-              display(HTML(r'<font color="red">Formula definition is not correct, check if all rules are applied correctly. Remember that a formula is defined by the following BNF: F :== P | ~ P | Q & Q | P | Q | P -> Q | P <-> Q | (P), where P,Q (in capital letters) are atoms.</font>'))
+              display(HTML(r'<b><b><font color="red">Formula definition is not correct, check if all rules are applied correctly. Remember that a formula is defined by the following BNF: F :== P | ~ P | Q & Q | P | Q | P -> Q | P <-> Q | (P), where P,Q (in capital letters) are atoms.</font>'))
       except ValueError:
           s = traceback.format_exc()
           result = (s.split("@@"))[-1]
@@ -143,11 +143,11 @@ def verify_free_variables(input_string='', input_formula = '', language_pt=True)
   wButtons = widgets.HBox([run])
   
   if language_pt:
-    display(HTML(rf'Digite o conjunto de variávels livres da fórmula {input_formula}:'))
-    display(HTML(r'Cada elemento do seu conjunto deve ser separado por ; (ponto-e-vírgula)'))
+    display(HTML(rf'<b>Digite o conjunto de variávels livres da fórmula {input_formula}:'))
+    display(HTML(r'<b>Cada elemento do seu conjunto deve ser separado por ; (ponto-e-vírgula)'))
   else:
-    display(HTML(rf'Enter the set of the free variables of the formula {input_formula}:'))
-    display(HTML(r'Each element of your set must be separated by ; (semicolon)'))
+    display(HTML(rf'<b>Enter the set of the free variables of the formula {input_formula}:'))
+    display(HTML(r'<b>Each element of your set must be separated by ; (semicolon)'))
   display(input, wButtons, output)
 
   def on_button_run_clicked(_):
@@ -161,17 +161,17 @@ def verify_free_variables(input_string='', input_formula = '', language_pt=True)
               if language_pt:
                 display(HTML('<font color="blue">Parabéns, você acertou a questão.</font>'))
               else:
-                display(HTML(r'<font color="blue">Congratulations, you got the question right!</font>'))              
+                display(HTML(r'<b><font color="blue">Congratulations, you got the question right!</font>'))              
             else:
               if language_pt:
-                display(HTML(r'<font color="red">Infelizmente, você errou a questão.</font>'))
+                display(HTML(r'<b><font color="red">Infelizmente, você errou a questão.</font>'))
               else:
-                display(HTML(r'<font color="red">Unfortunately, you got the question wrong.</font>'))
+                display(HTML(r'<b><font color="red">Unfortunately, you got the question wrong.</font>'))
           else:
             if language_pt:
-              display(HTML(r'<font color="red">A definição da fórmula não está correta, verifique se todas regras foram aplicadas corretamente. <br>Lembre-se que uma fórmula é definida pela seguinte BNF: <br>F :== P | ~ P | P & Q | P | Q | P -> Q | P <-> Q | (P), <br>onde P,Q (em caixa alta) são átomos.</font>'))
+              display(HTML(r'<b><font color="red">A definição da fórmula não está correta, verifique se todas regras foram aplicadas corretamente. <br>Lembre-se que uma fórmula é definida pela seguinte BNF: <br>F :== P | ~ P | P & Q | P | Q | P -> Q | P <-> Q | (P), <br>onde P,Q (em caixa alta) são átomos.</font>'))
             else:
-              display(HTML(r'<font color="red">Formula definition is not correct, check if all rules are applied correctly. Remember that a formula is defined by the following BNF: F :== P | ~ P | Q & Q | P | Q | P -> Q | P <-> Q | (P), where P,Q (in capital letters) are atoms.</font>'))
+              display(HTML(r'<b><font color="red">Formula definition is not correct, check if all rules are applied correctly. Remember that a formula is defined by the following BNF: F :== P | ~ P | Q & Q | P | Q | P -> Q | P <-> Q | (P), where P,Q (in capital letters) are atoms.</font>'))
       except ValueError:
           s = traceback.format_exc()
           result = (s.split("@@"))[-1]
@@ -193,11 +193,11 @@ def verify_bound_variables(input_string='', input_formula = '', language_pt=True
   wButtons = widgets.HBox([run])
   
   if language_pt:
-    display(HTML(rf'Digite o conjunto de variávels ligadas da fórmula {input_formula}:'))
-    display(HTML(r'Cada elemento do seu conjunto deve ser separado por ; (ponto-e-vírgula)'))
+    display(HTML(rf'<b>Digite o conjunto de variávels ligadas da fórmula {input_formula}:'))
+    display(HTML(r'<b>Cada elemento do seu conjunto deve ser separado por ; (ponto-e-vírgula)'))
   else:
-    display(HTML(rf'Enter the set of bound variables of the formula {input_formula}:'))
-    display(HTML(r'Each element of your set must be separated by ; (semicolon)'))
+    display(HTML(rf'<b>Enter the set of bound variables of the formula {input_formula}:'))
+    display(HTML(r'<b>Each element of your set must be separated by ; (semicolon)'))
   display(input, wButtons, output)
 
   def on_button_run_clicked(_):
@@ -211,17 +211,17 @@ def verify_bound_variables(input_string='', input_formula = '', language_pt=True
               if language_pt:
                 display(HTML('<font color="blue">Parabéns, você acertou a questão.</font>'))
               else:
-                display(HTML(r'<font color="blue">Congratulations, you got the question right!</font>'))              
+                display(HTML(r'<b><font color="blue">Congratulations, you got the question right!</font>'))              
             else:
               if language_pt:
-                display(HTML(r'<font color="red">Infelizmente, você errou a questão.</font>'))
+                display(HTML(r'<b><font color="red">Infelizmente, você errou a questão.</font>'))
               else:
-                display(HTML(r'<font color="red">Unfortunately, you got the question wrong.</font>'))
+                display(HTML(r'<b><font color="red">Unfortunately, you got the question wrong.</font>'))
           else:
             if language_pt:
-              display(HTML(r'<font color="red">A definição da fórmula não está correta, verifique se todas regras foram aplicadas corretamente. <br>Lembre-se que uma fórmula é definida pela seguinte BNF: <br>F :== P | ~ P | P & Q | P | Q | P -> Q | P <-> Q | (P), <br>onde P,Q (em caixa alta) são átomos.</font>'))
+              display(HTML(r'<b><font color="red">A definição da fórmula não está correta, verifique se todas regras foram aplicadas corretamente. <br>Lembre-se que uma fórmula é definida pela seguinte BNF: <br>F :== P | ~ P | P & Q | P | Q | P -> Q | P <-> Q | (P), <br>onde P,Q (em caixa alta) são átomos.</font>'))
             else:
-              display(HTML(r'<font color="red">Formula definition is not correct, check if all rules are applied correctly. Remember that a formula is defined by the following BNF: F :== P | ~ P | Q & Q | P | Q | P -> Q | P <-> Q | (P), where P,Q (in capital letters) are atoms.</font>'))
+              display(HTML(r'<b><font color="red">Formula definition is not correct, check if all rules are applied correctly. Remember that a formula is defined by the following BNF: F :== P | ~ P | Q & Q | P | Q | P -> Q | P <-> Q | (P), where P,Q (in capital letters) are atoms.</font>'))
       except ValueError:
           s = traceback.format_exc()
           result = (s.split("@@"))[-1]
@@ -251,9 +251,9 @@ def verify_substitution(input_string='', input_formula = '', input_var ='x', inp
   wButtons = widgets.HBox([run, cParentheses, cLatex])
   
   if language_pt:
-    display(HTML(rf'Digite a fórmula que é resultado da substituição da variável {input_var} pelo termo {input_term} na fórmula {input_formula}:'))
+    display(HTML(rf'<b>Digite a fórmula que é resultado da substituição da variável {input_var} pelo termo {input_term} na fórmula {input_formula}:'))
   else:
-    display(HTML(rf'Enter the formula that results from substitution the variable {input_var} with the term {input_term} in the formula {input_formula}:'))
+    display(HTML(rf'<b>Enter the formula that results from substitution the variable {input_var} with the term {input_term} in the formula {input_formula}:'))
   display(input, wButtons, output)
 
   def on_button_run_clicked(_):
@@ -265,24 +265,24 @@ def verify_substitution(input_string='', input_formula = '', input_var ='x', inp
           if(result!=None):
             if result==f.substitution(input_var,input_term):
               if language_pt:
-                display(HTML(r'<font color="blue">Parabéns essa é a subtituição correta:</font>'))              
+                display(HTML(r'<b><font color="blue">Parabéns essa é a subtituição correta:</font>'))              
               else:
-                display(HTML(r'<font color="blue">Congratulations this is the correct substitution:</font>'))              
+                display(HTML(r'<b><font color="blue">Congratulations this is the correct substitution:</font>'))              
               if(cLatex.value):
                 s = result.toLatex(parentheses=cParentheses.value)
-                display(Markdown(rf'${s}$'))
+                display(Markdown(rf'<b>${s}$'))
               else:
-                display(HTML(rf'{result.toString(parentheses=cParentheses.value)}'))
+                display(HTML(rf'<b>{result.toString(parentheses=cParentheses.value)}'))
             else:
               if language_pt:
-                display(HTML(rf'<font color="red">A fórmula {result.toString()} não é o resultado da substituição de {input_var} por {input_term} na fórmula {input_formula}.</font>'))
+                display(HTML(rf'<b><font color="red">A fórmula {result.toString()} não é o resultado da substituição de {input_var} por {input_term} na fórmula {input_formula}.</font>'))
               else:
-                display(HTML(rf'<font color="red">Formula {result.toString()} is not the result of substitution {input_var} with {input_term} in the formula {input_formula}.</font>'))
+                display(HTML(rf'<b><font color="red">Formula {result.toString()} is not the result of substitution {input_var} with {input_term} in the formula {input_formula}.</font>'))
           else:
             if language_pt:
-              display(HTML(r'<font color="red">A definição da fórmula não está correta, verifique se todas regras foram aplicadas corretamente. <br>Lembre-se que uma fórmula é definida pela seguinte BNF: <br>F :== P | ~ P | P & Q | P | Q | P -> Q | P <-> Q | (P), <br>onde P,Q (em caixa alta) são átomos.</font>'))
+              display(HTML(r'<b><font color="red">A definição da fórmula não está correta, verifique se todas regras foram aplicadas corretamente. <br>Lembre-se que uma fórmula é definida pela seguinte BNF: <br>F :== P | ~ P | P & Q | P | Q | P -> Q | P <-> Q | (P), <br>onde P,Q (em caixa alta) são átomos.</font>'))
             else:
-              display(HTML(r'<font color="red">Formula definition is not correct, check if all rules are applied correctly. Remember that a formula is defined by the following BNF: F :== P | ~ P | Q & Q | P | Q | P -> Q | P <-> Q | (P), where P,Q (in capital letters) are atoms.</font>'))
+              display(HTML(r'<b><font color="red">Formula definition is not correct, check if all rules are applied correctly. Remember that a formula is defined by the following BNF: F :== P | ~ P | Q & Q | P | Q | P -> Q | P <-> Q | (P), where P,Q (in capital letters) are atoms.</font>'))
       except ValueError:
           s = traceback.format_exc()
           result = (s.split("@@"))[-1]
@@ -301,16 +301,16 @@ def verify_reasoning(input_assumptions, input_conclusion, result_value=False, la
         description=r'Resposta:' if language_pt else r'Answer:',
         disabled=False
     )
-    questao = r'Considere as seguintes afirmações:' if language_pt else r'Consider the following statements:'
+    questao = r'<b>Considere as seguintes afirmações:' if language_pt else r'<b>Consider the following statements:'
     i = 1
     for assumption in input_assumptions:
         questao += f'\n1. {assumption}'
         i+=1
     display(Markdown(questao))
-    questao= r'Podemos concluir que a afirmação abaixo segue logicamente das afirmações acima?' if language_pt else r'Can we conclude that the statement below follows logically from the statements above?'
+    questao= r'<b>Podemos concluir que a afirmação abaixo segue logicamente das afirmações acima?' if language_pt else r'<b>Can we conclude that the statement below follows logically from the statements above?'
     display(Markdown(questao))
     questao =f'\n{i}. {input_conclusion}'
-    display(HTML(questao))
+    display(Markdown(questao))
     display(widgets.HBox([cResult,wButtons]), output)
 
     def on_button_run_clicked(_):
@@ -318,21 +318,21 @@ def verify_reasoning(input_assumptions, input_conclusion, result_value=False, la
         with output:
             if (cResult.value==None):
                 if language_pt:
-                    display(HTML(r'<font color="red">Escolha uma das alternativas! Tente novamente!</font>'))
+                    display(HTML(r'<b><font color="red">Escolha uma das alternativas! Tente novamente!</font>'))
                 else:
-                    display(HTML(r'<font color="red">Choose an option! Try again!</font>'))
+                    display(HTML(r'<b><font color="red">Choose an option! Try again!</font>'))
             elif(result_value==(cResult.value=='Sim' or cResult.value=='Yes')):
                 if language_pt:
-                    display(HTML(r'<font color="blue">Parabéns, você acertou a questão.</font>'))
+                    display(HTML(r'<b><font color="blue">Parabéns, você acertou a questão.</font>'))
                 else: 
-                    display(HTML(r'<font color="blue">Congratulations, you got the question right!</font>'))
+                    display(HTML(r'<b><font color="blue">Congratulations, you got the question right!</font>'))
                 cResult.disabled = True
                 run.disabled = True
             else:
                 if language_pt:
-                    display(HTML(r'<font color="red">Infelizmente, você errou a questão.</font>'))
+                    display(HTML(r'<b><font color="red">Infelizmente, você errou a questão.</font>'))
                 else:
-                    display(HTML(r'<font color="red">Unfortunately, you got the question wrong.</font>'))
+                    display(HTML(r'<b><font color="red">Unfortunately, you got the question wrong.</font>'))
                 cResult.disabled = True
                 run.disabled = True
     run.on_click(on_button_run_clicked)
@@ -359,9 +359,9 @@ def verify_formula(input_string='', language_pt=True):
   wButtons = widgets.HBox([run, cParentheses, cLatex])
   
   if language_pt:
-    display(HTML(r'Digite sua fórmula:'))
+    display(HTML(r'<b>Digite sua fórmula:'))
   else:
-    display(HTML(r'Enter your formula:'))
+    display(HTML(r'<b>Enter your formula:'))
   display(input, wButtons, output)
 
   def on_button_run_clicked(_):
@@ -371,21 +371,21 @@ def verify_formula(input_string='', language_pt=True):
           result = get_formula(input.value)
           if(result!=None):
               if language_pt:
-                display(HTML(r'<font color="blue">Parabéns! Esta é uma fórmula da lógica:</font>'))
+                display(HTML(r'<b><font color="blue">Parabéns! Esta é uma fórmula da lógica:</font>'))
               else:
-                display(HTML(r'<font color="blue">Congratulations this is a formula of logic:</font>'))
+                display(HTML(r'<b><font color="blue">Congratulations this is a formula of logic:</font>'))
 
               if(cLatex.value):
                 s = result.toLatex(parentheses=cParentheses.value)
-                display(Markdown(rf'${s}$'))
+                display(Markdown(rf'<b>${s}$'))
               else:
                 print(result.toString(parentheses=cParentheses.value))
-                #display(HTML(rf'{result.toString(parentheses=cParentheses.value)}'))
+                #display(HTML(rf'<b>{result.toString(parentheses=cParentheses.value)}'))
           else:
             if language_pt:
-              display(HTML(r'<font color="red">A definição da fórmula não está correta, verifique se todas regras foram aplicadas corretamente. <br>Lembre-se que uma fórmula é definida pela seguinte BNF: <br>F :== P | ~ P | P & Q | P | Q | P -> Q | P <-> Q | (P), <br>onde P,Q (em caixa alta) são átomos.</font>'))
+              display(HTML(r'<b><font color="red">A definição da fórmula não está correta, verifique se todas regras foram aplicadas corretamente. <br>Lembre-se que uma fórmula é definida pela seguinte BNF: <br>F :== P | ~ P | P & Q | P | Q | P -> Q | P <-> Q | (P), <br>onde P,Q (em caixa alta) são átomos.</font>'))
             else:
-              display(HTML(r'<font color="red">Formula definition is not correct, check if all rules are applied correctly. Remember that a formula is defined by the following BNF: F :== P | ~ P | Q & Q | P | Q | P -> Q | P <-> Q | (P), where P,Q (in capital letters) are atoms.</font>'))
+              display(HTML(r'<b><font color="red">Formula definition is not correct, check if all rules are applied correctly. Remember that a formula is defined by the following BNF: F :== P | ~ P | Q & Q | P | Q | P -> Q | P <-> Q | (P), where P,Q (in capital letters) are atoms.</font>'))
       except ValueError:
           s = traceback.format_exc()
           result = (s.split("@@"))[-1]
@@ -416,7 +416,7 @@ def verify_formula_function(function,input_formula='', input_text_question='Cons
   wButtons = widgets.HBox([run])
 #  wButtons = widgets.HBox([run, cParentheses, cLatex])
   
-  display(HTML(rf'{input_text_question}'))
+  display(HTML(rf'<b>{input_text_question}'))
   display(wInputs, wButtons, output)
 
   def on_button_run_clicked(_):
@@ -427,11 +427,11 @@ def verify_formula_function(function,input_formula='', input_text_question='Cons
           if(result!=None):
               
               if(str(function(result))==inputResult.value.strip()):
-                display(HTML(rf'<font color="blue">{input_text_result}</font>'))
+                display(HTML(rf'<b><font color="blue">{input_text_result}</font>'))
               else:
-                display(HTML(rf'<font color="red">{input_text_result_error}</font>'))
+                display(HTML(rf'<b><font color="red">{input_text_result_error}</font>'))
           else:
-            display(HTML(r'<font color="red">A definição da fórmula não está correta, verifique se todas regras foram aplicadas corretamente. <br>Lembre-se que uma fórmula é definida pela seguinte BNF: <br>F :== P | ~ P | P & Q | P | Q | P -> Q | P <-> Q | (P), <br>onde P,Q (em caixa alta) são átomos.</font>'))
+            display(HTML(r'<b><font color="red">A definição da fórmula não está correta, verifique se todas regras foram aplicadas corretamente. <br>Lembre-se que uma fórmula é definida pela seguinte BNF: <br>F :== P | ~ P | P & Q | P | Q | P -> Q | P <-> Q | (P), <br>onde P,Q (em caixa alta) são átomos.</font>'))
       except ValueError:
           s = traceback.format_exc()
           result = (s.split("@@"))[-1]
@@ -467,7 +467,7 @@ def verify_formula_function_atoms(function,input_formula='',input_atom='', input
   wButtons = widgets.HBox([run])
 #  wButtons = widgets.HBox([run, cParentheses, cLatex])
   
-  display(HTML(rf'{input_text_question}:'))
+  display(HTML(rf'<b>{input_text_question}:'))
   display(wInputs, wButtons, output)
 
   def on_button_run_clicked(_):
@@ -479,11 +479,11 @@ def verify_formula_function_atoms(function,input_formula='',input_atom='', input
           if(result!=None):
               
               if(str(function(result,resultAtom))==inputResult.value.strip()):
-                display(HTML(rf'<font color="blue">{input_text_result}</font>'))
+                display(HTML(rf'<b><font color="blue">{input_text_result}</font>'))
               else:
-                display(HTML(rf'<font color="red">{input_text_result_error}</font>'))
+                display(HTML(rf'<b><font color="red">{input_text_result_error}</font>'))
           else:
-            display(HTML(r'<font color="red">A definição da fórmula não está correta, verifique se todas regras foram aplicadas corretamente. <br>Lembre-se que uma fórmula é definida pela seguinte BNF: <br>F :== P | ~ P | P & Q | P | Q | P -> Q | P <-> Q | (P), <br>onde P,Q (em caixa alta) são átomos.</font>'))
+            display(HTML(r'<b><font color="red">A definição da fórmula não está correta, verifique se todas regras foram aplicadas corretamente. <br>Lembre-se que uma fórmula é definida pela seguinte BNF: <br>F :== P | ~ P | P & Q | P | Q | P -> Q | P <-> Q | (P), <br>onde P,Q (em caixa alta) são átomos.</font>'))
       except ValueError:
           s = traceback.format_exc()
           result = (s.split("@@"))[-1]
@@ -512,8 +512,8 @@ def verify_formula_function_set(function,input_formula='', input_text_question='
   wInputs = widgets.HBox([input, inputResult])
   wButtons = widgets.HBox([run])
 
-  display(HTML(rf'{input_text_question}:'))
-  display(HTML(r'Cada elemento do seu conjunto deve ser separado por ; (ponto-e-vírgula)'))
+  display(HTML(rf'<b>{input_text_question}:'))
+  display(HTML(r'<b>Cada elemento do seu conjunto deve ser separado por ; (ponto-e-vírgula)'))
   display(wInputs, wButtons, output)
 
   def on_button_run_clicked(_):
@@ -529,16 +529,16 @@ def verify_formula_function_set(function,input_formula='', input_text_question='
                   if f!=None:
                     setResult.add(f)
                   else:
-                    display(HTML(rf'<font color="red">{input_text_result_error}</font>'))
+                    display(HTML(rf'<b><font color="red">{input_text_result_error}</font>'))
                     return    
               else:
                 setResult = set()
               if(function(result)==setResult):
-                display(HTML(rf'<font color="blue">{input_text_result}</font>'))
+                display(HTML(rf'<b><font color="blue">{input_text_result}</font>'))
               else:
-                display(HTML(rf'<font color="red">{input_text_result_error}</font>'))
+                display(HTML(rf'<b><font color="red">{input_text_result_error}</font>'))
           else:
-            display(HTML(r'<font color="red">A definição da fórmula não está correta, verifique se todas regras foram aplicadas corretamente. <br>Lembre-se que uma fórmula é definida pela seguinte BNF: <br>F :== P | ~ P | P & Q | P | Q | P -> Q | P <-> Q | (P), <br>onde P,Q (em caixa alta) são átomos.</font>'))
+            display(HTML(r'<b><font color="red">A definição da fórmula não está correta, verifique se todas regras foram aplicadas corretamente. <br>Lembre-se que uma fórmula é definida pela seguinte BNF: <br>F :== P | ~ P | P & Q | P | Q | P -> Q | P <-> Q | (P), <br>onde P,Q (em caixa alta) são átomos.</font>'))
       except ValueError:
           s = traceback.format_exc()
           result = (s.split("@@"))[-1]
@@ -591,10 +591,10 @@ def display_formula_property(input_formula='', parentheses=False, language_pt=Tr
   try:
       formula = get_formula(input_formula)
       if(formula!=None):
-        display(Markdown(fr'Marque os itens abaixo que são verdadeiros para a fórmula ${formula.toLatex(parentheses=parentheses)}$'))
+        display(Markdown(fr'<b>Marque os itens abaixo que são verdadeiros para a fórmula ${formula.toLatex(parentheses=parentheses)}$'))
         display(cSat, cVal, cFals, cInsat,run, output)
       else:
-        display(HTML(r'<font color="red">A definição da fórmula não está correta, verifique se todas regras foram aplicadas corretamente. <br>Lembre-se que uma fórmula é definida pela seguinte BNF: <br>F :== P | ~ P | P & Q | P | Q | P -> Q | P <-> Q | (P), <br>onde P,Q (em caixa alta) são átomos.</font>'))
+        display(HTML(r'<b><font color="red">A definição da fórmula não está correta, verifique se todas regras foram aplicadas corretamente. <br>Lembre-se que uma fórmula é definida pela seguinte BNF: <br>F :== P | ~ P | P & Q | P | Q | P -> Q | P <-> Q | (P), <br>onde P,Q (em caixa alta) são átomos.</font>'))
   except ValueError:
       s = traceback.format_exc()
       result = (s.split("@@"))[-1]
@@ -608,18 +608,18 @@ def display_formula_property(input_formula='', parentheses=False, language_pt=Tr
       erro = False
       if(is_satisfiable(formula)!=cSat.value):
         erro = True
-        display(HTML(r'<font color="red">Revise a sua reposta sobre satisfatível.</font>'))  
+        display(HTML(r'<b><font color="red">Revise a sua reposta sobre satisfatível.</font>'))  
       if(is_valid(formula)!=cVal.value):
         erro = True
-        display(HTML(r'<font color="red">Revise a sua reposta sobre válida.</font>'))  
+        display(HTML(r'<b><font color="red">Revise a sua reposta sobre válida.</font>'))  
       if(is_falsiable(formula)!=cFals.value):
         erro = True
-        display(HTML(r'<font color="red">Revise a sua reposta sobre falsificável.</font>'))  
+        display(HTML(r'<b><font color="red">Revise a sua reposta sobre falsificável.</font>'))  
       if(is_unsatisfiable(formula)!=cInsat.value):
         erro = True
-        display(HTML(r'<font color="red">Revise a sua reposta sobre insatisfatível.</font>'))  
+        display(HTML(r'<b><font color="red">Revise a sua reposta sobre insatisfatível.</font>'))  
       if not erro:
-        display(HTML(r'<font color="blue">Parabéns, você acertou todas as respostas!</font>'))
+        display(HTML(r'<b><font color="blue">Parabéns, você acertou todas as respostas!</font>'))
   run.on_click(on_button_run_clicked)
 
 
@@ -637,7 +637,7 @@ def display_truth_table(input_string='', language_pt=True):
   output = widgets.Output()
   wButtons = widgets.HBox([run, cParentheses, cSubformulas])
   
-  display(HTML(r'Digite sua fórmula para gerar a Tabela-Verdade:'))
+  display(HTML(r'<b>Digite sua fórmula para gerar a Tabela-Verdade:'))
   display(input, wButtons, output)
 
   def on_button_run_clicked(_):
@@ -648,7 +648,7 @@ def display_truth_table(input_string='', language_pt=True):
           if(formula!=None):
               display(truth_table(formula, show_subformulas=cSubformulas.value,parentheses=cParentheses.value).style.hide_index())
           else:
-            display(HTML(r'<font color="red">A definição da fórmula não está correta, verifique se todas regras foram aplicadas corretamente. Lembre-se que uma fórmula é definida pela seguinte BNF: F :== P | ~ P | P & Q | P | Q | P -> Q | P <-> Q | (P), onde P,Q (em caixa alta) são átomos.</font>'))
+            display(HTML(r'<b><font color="red">A definição da fórmula não está correta, verifique se todas regras foram aplicadas corretamente. Lembre-se que uma fórmula é definida pela seguinte BNF: F :== P | ~ P | P & Q | P | Q | P -> Q | P <-> Q | (P), onde P,Q (em caixa alta) são átomos.</font>'))
       except ValueError:
           s = traceback.format_exc()
           result = (s.split("@@"))[-1]
@@ -673,12 +673,12 @@ def display_formula_is_true(input_formula='', v=None, parentheses=False, respons
 
       if(formula!=None):
         sV = '~~'+',~'.join([f'v({a}) = {v[a]}' for a in atoms])
-        display(HTML(fr'Considere a função de valoração:'))
-        display(Markdown(fr'${sV}$'))
-        display(Markdown(fr'Marque o item abaixo se a fórmula ${formula.toLatex(parentheses=parentheses)}$ é verdadeira para a função de valoração.'))
+        display(HTML(fr'<b>Considere a função de valoração:'))
+        display(Markdown(fr'<b>${sV}$'))
+        display(Markdown(fr'<b>Marque o item abaixo se a fórmula ${formula.toLatex(parentheses=parentheses)}$ é verdadeira para a função de valoração.'))
         display(cTrue,run, output)
       else:
-        display(HTML(r'<font color="red">A definição da fórmula não está correta, verifique se todas regras foram aplicadas corretamente. <br>Lembre-se que uma fórmula é definida pela seguinte BNF: <br>F :== P | ~ P | P & Q | P | Q | P -> Q | P <-> Q | (P), <br>onde P,Q (em caixa alta) são átomos.</font>'))
+        display(HTML(r'<b><font color="red">A definição da fórmula não está correta, verifique se todas regras foram aplicadas corretamente. <br>Lembre-se que uma fórmula é definida pela seguinte BNF: <br>F :== P | ~ P | P & Q | P | Q | P -> Q | P <-> Q | (P), <br>onde P,Q (em caixa alta) são átomos.</font>'))
   except ValueError:
       s = traceback.format_exc()
       result = (s.split("@@"))[-1]
@@ -691,11 +691,11 @@ def display_formula_is_true(input_formula='', v=None, parentheses=False, respons
     with output:
       if(v_bar(formula,v)!=cTrue.value):
         erro = True
-        display(HTML(r'<font color="red">Você errou, revise a sua reposta.</font>'))  
+        display(HTML(r'<b><font color="red">Você errou, revise a sua reposta.</font>'))  
       else:
-        display(HTML(r'<font color="blue">Parabéns, você acertou todas as respostas!</font>'))
+        display(HTML(r'<b><font color="blue">Parabéns, você acertou todas as respostas!</font>'))
       if response!='':
-         display(HTML(fr'Resposta: {response}.'))
+         display(HTML(fr'<b>Resposta: {response}.'))
   run.on_click(on_button_run_clicked)
 
 def display_truth_table_consequence_logic(input_string='', language_pt=True):
@@ -713,7 +713,7 @@ def display_truth_table_consequence_logic(input_string='', language_pt=True):
   output = widgets.Output()
   wButtons = widgets.HBox([run, cParentheses, cSubformulas, cTabelaVerdade])
   
-  display(HTML(r'Digite seu teorema:'))
+  display(HTML(r'<b>Digite seu teorema:'))
   display(input, wButtons, output)
 
   def on_button_run_clicked(_):
@@ -724,16 +724,16 @@ def display_truth_table_consequence_logic(input_string='', language_pt=True):
           if(conclusion!=None):
               result= consequence_logic(conclusion,premises=premises)
               if(result==None):
-                display(HTML(r'<font color="blue">O teorema é válido!</font>'))
+                display(HTML(r'<b><font color="blue">O teorema é válido!</font>'))
                 if(cTabelaVerdade.value):
                   df = truth_table(conclusion,premises=premises, show_subformulas=cSubformulas.value,parentheses=cParentheses.value)
                   display(df.style.hide_index())
               else:
-                display(HTML(fr'<font color="red">O teorema é inválido. A linha {result} da Tabela-Verdade abaixo é um contraexemplo.</font>'))  
+                display(HTML(fr'<b><font color="red">O teorema é inválido. A linha {result} da Tabela-Verdade abaixo é um contraexemplo.</font>'))  
                 df = truth_table(conclusion,premises=premises, show_subformulas=cSubformulas.value,parentheses=cParentheses.value)                
                 display(df)
           else:
-            display(HTML(r'<font color="red">A definição do teorema não está correta, verifique se todas regras foram aplicadas corretamente. Lembre-se que uma fórmula é definida pela seguinte BNF: F :== P | ~ F | F & F | F | F | F -> F | F <-> F | (F), onde P (em caixa alta) é um átomo e F é uma fórmula qualquer. Um Teorema é forma por uma lista de fórmula, |= e uma fórmula.</font>'))
+            display(HTML(r'<b><font color="red">A definição do teorema não está correta, verifique se todas regras foram aplicadas corretamente. Lembre-se que uma fórmula é definida pela seguinte BNF: F :== P | ~ F | F & F | F | F | F -> F | F <-> F | (F), onde P (em caixa alta) é um átomo e F é uma fórmula qualquer. Um Teorema é forma por uma lista de fórmula, |= e uma fórmula.</font>'))
       except ValueError:
           s = traceback.format_exc()
           result = (s.split("@@"))[-1]
@@ -746,7 +746,7 @@ def display_is_countermodel(input_theorem, universe=set(), s={}, preds={}, langu
   output = widgets.Output()
   
   try:
-      display(HTML(fr'Considere a interpretação:'))
+      display(HTML(fr'<b>Considere a interpretação:'))
       
       if language_pt:
         display(HTML(fr"- Conjunto universo: {'{'+', '.join(sorted(list(universe)))+'}'}"))
@@ -764,23 +764,23 @@ def display_is_countermodel(input_theorem, universe=set(), s={}, preds={}, langu
 
       if len(s)>0:
         if language_pt:
-          display(HTML(fr'- Variáveis: {", ".join([x_key+"="+x_values for x_key, x_values in s.items()])}'))
+          display(HTML(fr'<b>- Variáveis: {", ".join([x_key+"="+x_values for x_key, x_values in s.items()])}'))
         else:
-          display(HTML(fr'- Variables: {", ".join([x_key+"="+x_values for x_key, x_values in s.items()])}'))
+          display(HTML(fr'<b>- Variables: {", ".join([x_key+"="+x_values for x_key, x_values in s.items()])}'))
       premises, conclusion = get_theorem(input_theorem)
 
       if is_countermodel(premises,conclusion,universe,s, preds):
         if language_pt:
-          display(HTML(fr'<font color="blue">Parabéns, a interpretração acima é um contraexemplo para o teorema {input_theorem}!</font>'))
+          display(HTML(fr'<b><font color="blue">Parabéns, a interpretração acima é um contraexemplo para o teorema {input_theorem}!</font>'))
         else:
-          display(HTML(fr'<font color="blue">Congratulations, the interpretation is a countermodel of the theorem {input_theorem}!</font>'))              
+          display(HTML(fr'<b><font color="blue">Congratulations, the interpretation is a countermodel of the theorem {input_theorem}!</font>'))              
       else:
         if language_pt:
-          display(HTML(fr'<font color="red">Infelizmente, você errou a questão! A interpretação não é um contraexemplo para o teorema {input_theorem}!</font>'))  
+          display(HTML(fr'<b><font color="red">Infelizmente, você errou a questão! A interpretação não é um contraexemplo para o teorema {input_theorem}!</font>'))  
         else:
-          display(HTML(fr'<font color="red">Unfortunately, you got the question wrong. The interpretation is not a countermodel of the theorem {input_theorem}!</font>'))  
+          display(HTML(fr'<b><font color="red">Unfortunately, you got the question wrong. The interpretation is not a countermodel of the theorem {input_theorem}!</font>'))  
   except ValueError as error:
-    display(HTML(fr'<font color="red">{error}</font>'))   
+    display(HTML(fr'<b><font color="red">{error}</font>'))   
   else:
       pass
 
@@ -800,15 +800,15 @@ def display_truth_formulas(formulas, universe=set(), s={}, preds={}, language_pt
       for p_key, p_values in preds.items():
         s_values = '{'+', '.join(['('+','.join([k for k in r])+')' if type(r)==tuple else '('+r+')' for r in sorted(list(p_values))])+'}'
         if language_pt:
-          display(HTML(fr'- Predicado {p_key[0]}= {s_values}')) 
+          display(HTML(fr'<b>- Predicado {p_key[0]}= {s_values}')) 
         else:
-          display(HTML(fr'- Predicate {p_key[0]}= {s_values}')) 
+          display(HTML(fr'<b>- Predicate {p_key[0]}= {s_values}')) 
 
       if len(s)>0:
         if language_pt:
-          display(HTML(fr'- Variáveis: {", ".join([x_key+"="+x_values for x_key, x_values in s.items()])}'))
+          display(HTML(fr'<b>- Variáveis: {", ".join([x_key+"="+x_values for x_key, x_values in s.items()])}'))
         else:
-          display(HTML(fr'- Variables: {", ".join([x_key+"="+x_values for x_key, x_values in s.items()])}'))
+          display(HTML(fr'<b>- Variables: {", ".join([x_key+"="+x_values for x_key, x_values in s.items()])}'))
       if language_pt:
         display(HTML(fr'<b>Marque as fórmulas abaixo que são verdadeiras para o grafo acima:</b>'))
       else:
@@ -817,7 +817,7 @@ def display_truth_formulas(formulas, universe=set(), s={}, preds={}, language_pt
       l_formulas = [get_formula(f) for f in formulas]
   except ValueError:
       if language_pt:
-        display(HTML(r'<font color="red">A definição de alguma das fórmulas não está correta</font>'))
+        display(HTML(r'<b><font color="red">A definição de alguma das fórmulas não está correta</font>'))
       s = traceback.format_exc()
       result = (s.split("@@"))[-1]
       print (f'{result}')
@@ -838,14 +838,14 @@ def display_truth_formulas(formulas, universe=set(), s={}, preds={}, language_pt
 
       if not erro:
         if language_pt:
-          display(HTML(r'<b><font color="blue">Parabéns, você acertou todas as respostas!</font></b>'))
+          display(HTML(r'<b><b><font color="blue">Parabéns, você acertou todas as respostas!</font></b>'))
         else:
-          display(HTML(r'<b><font color="blue">Congratulations, you got the question right!</font></b>'))              
+          display(HTML(r'<b><b><font color="blue">Congratulations, you got the question right!</font></b>'))              
       else:
         if language_pt:
-          display(HTML(r'<b><font color="red">Você errou as seguintes fórmulas:</font></b>'))  
+          display(HTML(r'<b><b><font color="red">Você errou as seguintes fórmulas:</font></b>'))  
         else:
-          display(HTML(r'<b><font color="red">You got wrong the following fórmulas:</font></b>'))  
+          display(HTML(r'<b><b><font color="red">You got wrong the following fórmulas:</font></b>'))  
         s_formulas = '<br> '.join(erro_formulas)
         display(HTML(f'{s_formulas}'))  
   run.on_click(on_button_run_clicked)
@@ -859,9 +859,9 @@ def display_graph_truth_formulas(formulas, arcs, universe=None, s={}, parenthese
       preds={}
       preds['E',2]= arcs
       if language_pt:
-        display(HTML(fr'Considere o seguinte grafo:'))
+        display(HTML(fr'<b>Considere o seguinte grafo:'))
       else:
-        display(HTML(fr'Consider the following graph:'))
+        display(HTML(fr'<b>Consider the following graph:'))
         
       if universe==None:
         universe = set()
@@ -870,26 +870,26 @@ def display_graph_truth_formulas(formulas, arcs, universe=None, s={}, parenthese
           universe.add(y)      
           
       if language_pt:
-        display(HTML(fr"- Conjunto universo: {'{'+', '.join(sorted(list(universe)))+'}'}"))
+        display(HTML(fr"- <b>Conjunto universo:</b> {'{'+', '.join(sorted(list(universe)))+'}'}"))
       else:
-        display(HTML(fr"- Universe set: {'{'+', '.join(sorted(list(universe)))+'}'}"))
+        display(HTML(fr"- <b>Universe set:</b> {'{'+', '.join(sorted(list(universe)))+'}'}"))
 
       display(visualiza_relacao(universe, arcs))
       if len(s)>0:
         if language_pt:
-          display(HTML(fr'- Variáveis: {", ".join([x_key+"="+x_values for x_key, x_values in s.items()])}'))
+          display(HTML(fr'<b>- <b>Variáveis:</b> {", ".join([x_key+"="+x_values for x_key, x_values in s.items()])}'))
         else:
-          display(HTML(fr'- Variables: {", ".join([x_key+"="+x_values for x_key, x_values in s.items()])}'))
+          display(HTML(fr'<b>- <b>Variables:</b> {", ".join([x_key+"="+x_values for x_key, x_values in s.items()])}'))
       if language_pt:
-        display(HTML(fr'Marque as fórmulas abaixo que são verdadeiras para o grafo acima:'))
+        display(HTML(fr'<b>Marque as fórmulas abaixo que são verdadeiras para o grafo acima:'))
       else:
-        display(HTML(fr'Check the formulas below which are true for the above graph:'))
+        display(HTML(fr'<b>Check the formulas below which are true for the above graph:'))
 
       display(*tuple(cFormulas + [run, output]))
       l_formulas = [get_formula(f) for f in formulas]
   except ValueError:
       if language_pt:
-        display(HTML(r'<font color="red">A definição de alguma das fórmulas não está correta</font>'))
+        display(HTML(r'<b><b><font color="red">A definição de alguma das fórmulas não está correta</font>'))
       s = traceback.format_exc()
       result = (s.split("@@"))[-1]
       print (f'{result}')
@@ -909,15 +909,15 @@ def display_graph_truth_formulas(formulas, arcs, universe=None, s={}, parenthese
           erro_formulas.append(formulas[i])
       if not erro:
         if language_pt:
-          display(HTML(r'<font color="blue">Parabéns, você acertou todas as respostas!</font>'))
+          display(HTML(r'<b><b><font color="blue">Parabéns, você acertou todas as respostas!</font>'))
         else:
-          display(HTML(r'<font color="blue">Congratulations, you got the question right!</font>'))              
+          display(HTML(r'<b><b><font color="blue">Congratulations, you got the question right!</font>'))              
 
       else:
         if language_pt:
-          display(HTML(r'<font color="red">Você errou as seguintes fórmulas:</font>'))  
+          display(HTML(r'<b><b><font color="red">Você errou as seguintes fórmulas:</font>'))  
         else:
-          display(HTML(r'<font color="red">You got wrong the following fórmulas:</font>'))  
+          display(HTML(r'<b><b><font color="red">You got wrong the following fórmulas:</font>'))  
         s_formulas = ', '.join(erro_formulas)
         display(HTML(f'{s_formulas}'))  
   run.on_click(on_button_run_clicked)
@@ -951,9 +951,9 @@ def display_countermodel_decoder(input_theorem, input_interpretation = '', heigh
       layout=layout
       )
   if language_pt:
-    display(HTML(fr'Apresente um contraexemplo para o teorema {input_theorem}'))
+    display(HTML(fr'<b>Apresente um contraexemplo para o teorema {input_theorem}'))
   else:
-    display(HTML(fr'Define a countermodel for the theorem {input_theorem}')) 
+    display(HTML(fr'<b>Define a countermodel for the theorem {input_theorem}')) 
   premises, conclusion = get_theorem(input_theorem)
   signature_preds = get_signature_predicates(conclusion, premises)
   l_preds = sorted(list(signature_preds.keys()))
@@ -985,16 +985,16 @@ def display_countermodel_decoder(input_theorem, input_interpretation = '', heigh
         universe, preds, s  = decode_fo_interpretation(input.value)
         if is_countermodel(premises,conclusion,universe,s, preds):
           if language_pt:
-            display(HTML(fr'<font color="blue">Parabéns, a interpretração acima é um contraexemplo para o teorema {input_theorem}!</font>'))
+            display(HTML(fr'<b><font color="blue">Parabéns, a interpretração acima é um contraexemplo para o teorema {input_theorem}!</font>'))
           else:
-            display(HTML(fr'<font color="blue">Congratulations, the interpretation is a countermodel of the theorem {input_theorem}!</font>'))              
+            display(HTML(fr'<b><font color="blue">Congratulations, the interpretation is a countermodel of the theorem {input_theorem}!</font>'))              
         else:
           if language_pt:
-            display(HTML(fr'<font color="red">Infelizmente, você errou a questão! A interpretação não é um contraexemplo para o teorema {input_theorem}!</font>'))  
+            display(HTML(fr'<b><font color="red">Infelizmente, você errou a questão! A interpretação não é um contraexemplo para o teorema {input_theorem}!</font>'))  
           else:
-            display(HTML(fr'<font color="red">Unfortunately, you got the question wrong. The interpretation is not a countermodel of the theorem {input_theorem}!</font>'))  
+            display(HTML(fr'<b><font color="red">Unfortunately, you got the question wrong. The interpretation is not a countermodel of the theorem {input_theorem}!</font>'))  
       except ValueError as error:
-        display(HTML(fr'<font color="red">{error}</font>'))   
+        display(HTML(fr'<b><font color="red">{error}</font>'))   
       else:
           pass
   run.on_click(on_button_run_clicked)
@@ -1018,9 +1018,9 @@ def display_countermodel(input_theorem, language_pt=True):
       )
   run = widgets.Button(description="Verificar" if language_pt else "Check")
   if language_pt:
-    display(HTML(fr'Apresente um contraexemplo para o teorema {input_theorem}'))
+    display(HTML(fr'<b>Apresente um contraexemplo para o teorema {input_theorem}'))
   else:
-    display(HTML(fr'Define a countermodel for the theorem {input_theorem}')) 
+    display(HTML(fr'<b>Define a countermodel for the theorem {input_theorem}')) 
 
   premises, conclusion = get_theorem(input_theorem)
   signature_preds = get_signature_predicates(conclusion,premises)
@@ -1060,9 +1060,9 @@ def display_countermodel(input_theorem, language_pt=True):
 
   input_universe.value = ''
   if language_pt:
-    display(HTML(fr'Entre com o conjunto universo:'))
+    display(HTML(fr'<b>Entre com o conjunto universo:'))
   else:
-    display(HTML(fr'Enter the universe set:'))
+    display(HTML(fr'<b>Enter the universe set:'))
   display(widgets.HBox([input_universe, continue_universe]))
 
   display(output)
@@ -1079,9 +1079,9 @@ def display_countermodel(input_theorem, language_pt=True):
       continue_universe.disabled = True
       universe = parser_lista_strings(input_universe.value)
       if language_pt:
-        text_pred = HTML(fr'Para cada predicado abaixo, marque as tuplas que são válidas para o predicado.')
+        text_pred = HTML(fr'<b>Para cada predicado abaixo, marque as tuplas que são válidas para o predicado.')
       else:
-        text_pred = HTML(fr'For each predicate below, check the tuples that are true for the predicate.')
+        text_pred = HTML(fr'<b>For each predicate below, check the tuples that are true for the predicate.')
       i=0
       for p in l_preds:
         for arity in signature_preds[p]:
@@ -1105,13 +1105,13 @@ def display_countermodel(input_theorem, language_pt=True):
           w_variables[i].options= universe
           i+=1
         if language_pt:
-          text_var = HTML(fr'Para cada variável abaixo, selecione a interpretação da variável.')
+          text_var = HTML(fr'<b>Para cada variável abaixo, selecione a interpretação da variável.')
         else:
-          text_var = HTML(fr'For each variable below, select the interpretation for the variable.')
+          text_var = HTML(fr'<b>For each variable below, select the interpretation for the variable.')
         display(text_var)
         display(widgets.HBox(w_variables))
     with output_run:
-      # display(HTML(fr'Verifique se a interpretação acima é um contraexemplo para o teorema'))
+      # display(HTML(fr'<b>Verifique se a interpretação acima é um contraexemplo para o teorema'))
       display(run)
 
   def on_button_run_clicked(_):
@@ -1135,14 +1135,14 @@ def display_countermodel(input_theorem, language_pt=True):
       with output_result:
         if is_countermodel(premises,conclusion,universe,s, preds):
           if language_pt:
-            display(HTML(fr'<font color="blue">Parabéns, a interpretração acima é um contraexemplo para o teorema {input_theorem}!</font>'))
+            display(HTML(fr'<b><font color="blue">Parabéns, a interpretração acima é um contraexemplo para o teorema {input_theorem}!</font>'))
           else:
-            display(HTML(fr'<font color="blue">Congratulations, the interpretation is a countermodel of the theorem {input_theorem}!</font>'))              
+            display(HTML(fr'<b><font color="blue">Congratulations, the interpretation is a countermodel of the theorem {input_theorem}!</font>'))              
         else:
           if language_pt:
-            display(HTML(fr'<font color="red">Infelizmente, você errou a questão! A interpretação não é um contraexemplo para o teorema {input_theorem}!</font>'))  
+            display(HTML(fr'<b><font color="red">Infelizmente, você errou a questão! A interpretação não é um contraexemplo para o teorema {input_theorem}!</font>'))  
           else:
-            display(HTML(fr'<font color="red">Unfortunately, you got the question wrong. The interpretation is not a countermodel of the theorem {input_theorem}!</font>'))  
+            display(HTML(fr'<b><font color="red">Unfortunately, you got the question wrong. The interpretation is not a countermodel of the theorem {input_theorem}!</font>'))  
       
   continue_universe.on_click(on_button_continue_universe_clicked)
   run.on_click(on_button_run_clicked)
