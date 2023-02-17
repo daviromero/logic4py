@@ -791,7 +791,7 @@ def display_truth_formulas(formulas, universe=set(), s={}, preds={}, language_pt
   output = widgets.Output()
   
   try:
-      display(HTML(fr'Considere a interpretação:'))
+      display(HTML(fr'<b>Considere a interpretação:</b>'))
       
       if language_pt:
         display(HTML(fr"- Conjunto universo: {'{'+', '.join(sorted(list(universe)))+'}'}"))
@@ -810,9 +810,9 @@ def display_truth_formulas(formulas, universe=set(), s={}, preds={}, language_pt
         else:
           display(HTML(fr'- Variables: {", ".join([x_key+"="+x_values for x_key, x_values in s.items()])}'))
       if language_pt:
-        display(HTML(fr'Marque as fórmulas abaixo que são verdadeiras para o grafo acima:'))
+        display(HTML(fr'<b>Marque as fórmulas abaixo que são verdadeiras para o grafo acima:</b>'))
       else:
-        display(HTML(fr'Check the formulas below which are true for the above graph:'))
+        display(HTML(fr'<b>Check the formulas below which are true for the above graph:</b>'))
       display(*tuple(cFormulas + [run, output]))
       l_formulas = [get_formula(f) for f in formulas]
   except ValueError:
@@ -838,15 +838,15 @@ def display_truth_formulas(formulas, universe=set(), s={}, preds={}, language_pt
 
       if not erro:
         if language_pt:
-          display(HTML(r'<font color="blue">Parabéns, você acertou todas as respostas!</font>'))
+          display(HTML(r'<b><font color="blue">Parabéns, você acertou todas as respostas!</font></b>'))
         else:
-          display(HTML(r'<font color="blue">Congratulations, you got the question right!</font>'))              
+          display(HTML(r'<b><font color="blue">Congratulations, you got the question right!</font></b>'))              
       else:
         if language_pt:
-          display(HTML(r'<font color="red">Você errou as seguintes fórmulas:</font>'))  
+          display(HTML(r'<b><font color="red">Você errou as seguintes fórmulas:</font></b>'))  
         else:
-          display(HTML(r'<font color="red">You got wrong the following fórmulas:</font>'))  
-        s_formulas = ', '.join(erro_formulas)
+          display(HTML(r'<b><font color="red">You got wrong the following fórmulas:</font></b>'))  
+        s_formulas = '<br> '.join(erro_formulas)
         display(HTML(f'{s_formulas}'))  
   run.on_click(on_button_run_clicked)
 
