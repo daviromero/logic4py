@@ -794,9 +794,9 @@ def display_truth_formulas(formulas, universe=set(), s={}, preds={}, language_pt
       display(HTML(fr'<b>Considere a interpretação:</b>'))
       
       if language_pt:
-        display(HTML(fr"- Conjunto universo: {'{'+', '.join(sorted(list(universe)))+'}'}"))
+        display(HTML(fr"<b>- Conjunto universo:</b> {'{'+', '.join(sorted(list(universe)))+'}'}"))
       else:
-        display(HTML(fr"- Universe set: {'{'+', '.join(sorted(list(universe)))+'}'}"))
+        display(HTML(fr"<b>- Universe set:</b> {'{'+', '.join(sorted(list(universe)))+'}'}"))
       for p_key, p_values in preds.items():
         s_values = '{'+', '.join(['('+','.join([k for k in r])+')' if type(r)==tuple else '('+r+')' for r in sorted(list(p_values))])+'}'
         if language_pt:
@@ -918,7 +918,7 @@ def display_graph_truth_formulas(formulas, arcs, universe=None, s={}, parenthese
           display(HTML(r'<b><b><font color="red">Você errou as seguintes fórmulas:</font>'))  
         else:
           display(HTML(r'<b><b><font color="red">You got wrong the following fórmulas:</font>'))  
-        s_formulas = ', '.join(erro_formulas)
+        s_formulas = '<br>'.join(erro_formulas)
         display(HTML(f'{s_formulas}'))  
   run.on_click(on_button_run_clicked)
 
