@@ -377,7 +377,7 @@ def verify_formula(input_string='', language_pt=True):
 
               if(cLatex.value):
                 s = result.toLatex(parentheses=cParentheses.value)
-                display(Markdown(rf'<b>${s}$'))
+                display(Markdown(fr'${s}$'))
               else:
                 print(result.toString(parentheses=cParentheses.value))
                 #display(HTML(rf'<b>{result.toString(parentheses=cParentheses.value)}'))
