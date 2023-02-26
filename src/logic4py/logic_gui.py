@@ -359,9 +359,9 @@ def verify_formula(input_string='', language_pt=True):
   wButtons = widgets.HBox([run, cParentheses, cLatex])
   
   if language_pt:
-    display(HTML(r'<b>Digite sua fórmula:'))
+    display(Markdown(r'<b>Digite sua fórmula:'))
   else:
-    display(HTML(r'<b>Enter your formula:'))
+    display(Markdown(r'<b>Enter your formula:'))
   display(input, wButtons, output)
 
   def on_button_run_clicked(_):
