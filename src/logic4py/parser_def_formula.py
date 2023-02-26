@@ -128,23 +128,18 @@ class ParserDefFormula():
         @self.pg.production('program : steps')
         def program(p):
             if len(self.error['messages']):
-                erro_msg = rf'**<font color="red">Os seguintes erros foram encontrados:</font>**' 
-                #display(Markdown(rf'**<font color="red">Os seguintes erros foram encontrados:</font>**')) 
-                #print('Os seguintes erros foram encontrados:')
+                erro_msg = rf'Os seguintes erros foram encontrados:' 
 
                 error_number = 1
                 errorList = []
 
                 for error_message in self.error['messages']:
                     errorList.append('Erro {}: {}'.format(error_number, error_message))
-                    #print('Erro {}: {}'.format(error_number, error_message))
                     error_number += 1
                 return erro_msg, errorList
             else:
                 last_index = sorted(self.symbol_table.keys())[-1]
-                return rf'**<font color="blue">A demonstração da fórmula {self.symbol_table[last_index][0].toString(parentheses=True)} está correta.</font>**',[]
-                #display(Markdown(rf'**<font color="blue">A demonstração da fórmula {self.symbol_table[last_index][0].toString(parentheses=True)} está correta.</font>**')) 
-                #print('A demonstração da fórmula {} está correta'.format(self.symbol_table[last_index][0].toString(parentheses=True))) 
+                return fr'A demonstração da fórmula {self.symbol_table[last_index][0].toString(parentheses=True)} está correta',[]
 
 
 

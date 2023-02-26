@@ -550,7 +550,7 @@ def verify_formula_function_set(function,input_formula='', input_text_question='
 
 def check_def_formula_proof(input_proof='', height_layout='300px', language_pt=True):
   layout = widgets.Layout(width='90%', height=height_layout)
-  run = widgets.Button(description="Verificar")
+  run = widgets.Button(description='Verificar' if language_pt else 'Check')
   input = widgets.Textarea(
       value=input_proof,
       placeholder='Digite sua demonstração:' if language_pt else 'Enter your proof:',
@@ -559,9 +559,11 @@ def check_def_formula_proof(input_proof='', height_layout='300px', language_pt=T
       )
   output = widgets.Output()
   wButtons = widgets.HBox([run])
-  
-  display(widgets.HTML('<h3>Digite sua demonstração de que uma fórmula pertence a linguagem da lógica:</h3>'), 
-          input, wButtons, output)
+  if (language_pt):
+    display(widgets.HTML('<h3>Digite sua demonstração de que uma fórmula pertence a linguagem da lógica:</h3>'))
+  else:
+    display(widgets.HTML('<h3>Enter your proof that a formula is in the propositional logic:</h3>'))
+  display(input, wButtons, output)
 
   def on_button_run_clicked(_):
     output.clear_output()
@@ -570,11 +572,11 @@ def check_def_formula_proof(input_proof='', height_layout='300px', language_pt=T
           result, errors = check_proof(input.value)
           display(HTML(result))
           for er in errors:
-            print(er)
+            display(HTML(er))
       except ValueError:
           s = traceback.format_exc()
           result = (s.split("@@"))[-1]
-          print (f'{result}')
+          display(HTML (f'{result}'))
       else:
           pass
   run.on_click(on_button_run_clicked)
