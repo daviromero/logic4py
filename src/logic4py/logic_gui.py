@@ -570,7 +570,11 @@ def check_def_formula_proof(input_proof='', height_layout='300px', language_pt=T
     with output:
       try:
           result, errors = check_proof(input.value)
-          display(HTML(result))
+          if errors==[]:
+            display(HTML(rf'<b><font color="blue">{result}</font>'))
+          else:
+            display(HTML(rf'<b><font color="red">{result}</font>'))
+          # display(HTML(result))
           for er in errors:
             display(HTML(er))
       except ValueError:
