@@ -371,9 +371,9 @@ def verify_formula(input_string='', language_pt=True):
           result = get_formula(input.value)
           if(result!=None):
               if language_pt:
-                display(HTML(r'<b><font color="blue">Parabéns! Esta é uma fórmula da lógica:</font>'))
+                display(HTML(r'<b><font color="blue">Parabéns! Esta é uma fórmula da lógica:</font></b>'))
               else:
-                display(HTML(r'<b><font color="blue">Congratulations this is a formula of logic:</font>'))
+                display(HTML(r'<b><font color="blue">Congratulations this is a formula of logic:</font></b>'))
 
               if(cLatex.value):
                 s = result.toLatex(parentheses=cParentheses.value)
