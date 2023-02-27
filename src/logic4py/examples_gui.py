@@ -1,5 +1,24 @@
 from logic4py.logic_gui import verify_reasoning, display_is_countermodel, display_truth_formulas, display_graph_truth_formulas
 
+EXAMPLES = {}
+
+EXAMPLES['q1_ex'] = {  
+    'input_assumptions_pt': ['Se está chovendo, então a rua está molhada.','Está chovendo.'], 
+    'input_conclusion_pt' : 'A rua está molhada.',
+    'input_assumptions_en': ["If it's raining, then the street is wet.","It's raining"],
+    'input_conclusion_en' : "The street is wet.",
+    'result_value': True
+    }
+
+EXAMPLES['q1'] = {  
+    'input_assumptions_pt': ['Se o dólar sobe, então os produtos ficam mais caros.', 
+                                'Os produtos não ficaram mais caros.'], 
+    'input_conclusion_pt' : 'dólar não subiu.',
+    'input_assumptions_en': ['Se o dólar sobe, então os produtos ficam mais caros.',
+                                'Os produtos não ficaram mais caros.'], 
+    'input_conclusion_en' : 'dólar não subiu.',
+    'result_value': True
+    }
 
 
 def verify_reasoning_q1_ex(language_pt=True):

@@ -291,6 +291,26 @@ def verify_substitution(input_string='', input_formula = '', input_var ='x', inp
           pass
   run.on_click(on_button_run_clicked)
 
+def verify_reasoning_exercice(examples, question, language='pt'):
+    language_pt = language=='pt'
+    if question not in examples.keys():
+        if language_pt:
+            raise ValueError(f"Questão {question} não está definida!")
+        else:
+            raise ValueError(f"Question {question} is not defined!")
+    elif 'input_assumptions_'+language not in examples[question].keys():
+        if language_pt:
+           raise ValueError(f"Premissas da {question} não está definida na língua portuguesa!")
+        else:
+           raise ValueError(f"Assumptions for {question} is not defined in the language {language}!")
+    elif 'input_conclusion_'+language not in examples[question].keys():
+        if language_pt:
+           raise ValueError(f"A conclusão da {question} não está definida na língua portuguesa!")
+        else:
+           raise ValueError(f"Conclusion for {question} is not defined in the language {language}!")
+    return verify_reasoning(examples[question]['input_assumptions_'+language],examples[question]['input_conclusion_'+language], examples[question]['result_value'], language_pt=language_pt)
+
+
 def verify_reasoning(input_assumptions, input_conclusion, result_value=False, language_pt=True):
     run = widgets.Button(description="Verificar") if language_pt else widgets.Button(description="Check")
     output = widgets.Output()
