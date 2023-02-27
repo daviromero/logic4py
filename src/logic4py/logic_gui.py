@@ -841,9 +841,9 @@ def display_truth_formulas(formulas, universe=set(), s={}, preds={}, language_pt
 
       if len(s)>0:
         if language_pt:
-          display(HTML(fr'<b>- Variáveis: {", ".join([x_key+"</b>="+x_values for x_key, x_values in s.items()])}'))
+          display(HTML(fr'<b>- Variáveis:</b> {", ".join(["<b>"+x_key+"</b>="+x_values for x_key, x_values in s.items()])}'))
         else:
-          display(HTML(fr'<b>- Variables: {", ".join([x_key+"</b>="+x_values for x_key, x_values in s.items()])}'))
+          display(HTML(fr'<b>- Variables:</b> {", ".join(["<b>"+x_key+"</b>="+x_values for x_key, x_values in s.items()])}'))
       if language_pt:
         display(HTML(fr'<b>Marque as fórmulas abaixo que são verdadeiras para o grafo acima:</b>'))
       else:
