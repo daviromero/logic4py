@@ -292,7 +292,7 @@ def verify_substitution(input_string='', input_formula = '', input_var ='x', inp
           pass
   run.on_click(on_button_run_clicked)
 
-def verify_reasoning_example(examples, question, language='pt'):
+def verify_reasoning_example(question, language='pt'):
   return verify_reasoning_exercise(EXAMPLES, question, language=language)
 
 def verify_reasoning_exercise(examples, question, language='pt'):
