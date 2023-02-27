@@ -308,6 +308,11 @@ def verify_reasoning_exercise(examples, question, language='pt'):
            raise ValueError(f"A conclusão da {question} não está definida na língua portuguesa!")
         else:
            raise ValueError(f"Conclusion for {question} is not defined in the language {language}!")
+    elif 'result_value' not in examples[question].keys():
+        if language_pt:
+           raise ValueError(f"O valor-verdade da {question} não está definido!")
+        else:
+           raise ValueError(f"The truth-value for {question} is not defined!")
     return verify_reasoning(examples[question]['input_assumptions_'+language],examples[question]['input_conclusion_'+language], examples[question]['result_value'], language_pt=language_pt)
 
 
