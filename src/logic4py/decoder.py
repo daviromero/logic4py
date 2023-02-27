@@ -19,7 +19,7 @@ def decode_fo_interpretation(input_fo_interpretatio, universe_key='U'):
       else:
         s_key = key
         if len(data[key])==0:
-          arity = -1
+          raise ValueError(f'Como a interpretação do predicado {key} é vazia, você deve explicitar a aridade do predicado. Por exemplo, se ele for de aridade 1, então defina {key}_1 = '+'{}.')
         else:
           arity = len(data[key][0]) if list==type(data[key][0]) else 1
       if arity>1:

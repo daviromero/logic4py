@@ -835,15 +835,15 @@ def display_truth_formulas(formulas, universe=set(), s={}, preds={}, language_pt
       for p_key, p_values in preds.items():
         s_values = '{'+', '.join(['('+','.join([k for k in r])+')' if type(r)==tuple else '('+r+')' for r in sorted(list(p_values))])+'}'
         if language_pt:
-          display(HTML(fr'<b>- Predicado {p_key[0]}= {s_values}')) 
+          display(HTML(fr'<b>- Predicado {p_key[0]}</b>= {s_values}')) 
         else:
-          display(HTML(fr'<b>- Predicate {p_key[0]}= {s_values}')) 
+          display(HTML(fr'<b>- Predicate {p_key[0]}=</b> {s_values}')) 
 
       if len(s)>0:
         if language_pt:
-          display(HTML(fr'<b>- Variáveis: {", ".join([x_key+"="+x_values for x_key, x_values in s.items()])}'))
+          display(HTML(fr'<b>- Variáveis: {", ".join([x_key+"</b>="+x_values for x_key, x_values in s.items()])}'))
         else:
-          display(HTML(fr'<b>- Variables: {", ".join([x_key+"="+x_values for x_key, x_values in s.items()])}'))
+          display(HTML(fr'<b>- Variables: {", ".join([x_key+"</b>="+x_values for x_key, x_values in s.items()])}'))
       if language_pt:
         display(HTML(fr'<b>Marque as fórmulas abaixo que são verdadeiras para o grafo acima:</b>'))
       else:
@@ -975,7 +975,7 @@ def produto_cartesiano(A, size):
     R.append(tuple([A[i // (len(A)(size-j-1)) % len(A)] for j in range(size)]))
   return R
 
-def display_countermodel_decoder(input_theorem, input_interpretation = '', height_layout='300px', language_pt=True):
+def display_countermodel_decoder(input_theorem, input_interpretation = '', height_layout='250px', language_pt=True):
   layout = widgets.Layout(width='90%', height=height_layout)
   output = widgets.Output()
   run = widgets.Button(description="Verificar" if language_pt else "Check")
@@ -994,9 +994,9 @@ def display_countermodel_decoder(input_theorem, input_interpretation = '', heigh
   l_preds = sorted(list(signature_preds.keys()))
   if input_interpretation=='':
     if language_pt:
-      input_string = "#Defina o conjunto universo:\nU = {}\n#Defina os predicados:"
+      input_string = "# Defina o conjunto universo:\nU = {}\n# Defina os predicados:"
     else: 
-      input_string = "#Set the universe set:\nU = {}\n#Set the Predicates:"
+      input_string = "# Set the universe set:\nU = {}\n# Set the Predicates:"
     for p in l_preds:
         for arity in signature_preds[p]:
           input_string+=f"\n{p} = "+"{("+','.join([' ' for x in range(arity)])+")}"
@@ -1006,9 +1006,9 @@ def display_countermodel_decoder(input_theorem, input_interpretation = '', heigh
     free_variables=sorted(list(free_variables))
     if len(free_variables)>0:
       if language_pt:
-        input_string += "\n#Defina as variáveis:"
+        input_string += "\n# Defina as variáveis:"
       else: 
-        input_string += "\n#Set the variables:"
+        input_string += "\n# Set the variables:"
       for x in free_variables:
         input_string+=f"\n{x} = "
     input.value = input_string
