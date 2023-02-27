@@ -5,6 +5,7 @@ from logic4py.parser_theorem import get_theorem
 from logic4py.parser_def_formula import check_proof
 from logic4py.formula import get_atoms, v_bar, get_vs, consequence_logic, truth_table, is_falsiable, is_unsatisfiable, is_satisfiable, is_valid, sat, is_countermodel, get_signature_predicates, get_propositional_atoms, get_signature_propositional_atoms
 from logic4py.decoder import decode_fo_interpretation
+from logic4py.example_reasoning import EXAMPLES
 from random import randrange
 import traceback
 from graphviz import Digraph
@@ -290,6 +291,9 @@ def verify_substitution(input_string='', input_formula = '', input_var ='x', inp
       else:
           pass
   run.on_click(on_button_run_clicked)
+
+def verify_reasoning_example(examples, question, language='pt'):
+  return verify_reasoning_exercise(EXAMPLES, question, language=language)
 
 def verify_reasoning_exercise(examples, question, language='pt'):
     language_pt = language=='pt'
