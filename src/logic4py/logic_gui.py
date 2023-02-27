@@ -975,7 +975,7 @@ def produto_cartesiano(A, size):
     R.append(tuple([A[i // (len(A)(size-j-1)) % len(A)] for j in range(size)]))
   return R
 
-def display_countermodel_decoder(input_theorem, input_interpretation = '', height_layout='150px', language_pt=True):
+def display_countermodel_decoder(input_theorem, input_interpretation = '', height_layout='140px', language_pt=True):
   layout = widgets.Layout(width='90%', height=height_layout)
   output = widgets.Output()
   run = widgets.Button(description="Verificar" if language_pt else "Check")
