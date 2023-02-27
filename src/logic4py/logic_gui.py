@@ -513,7 +513,7 @@ def verify_formula_function_set(function,input_formula='', input_text_question='
   wButtons = widgets.HBox([run])
 
   display(HTML(rf'<b>{input_text_question}:'))
-  display(HTML(r'<b>Cada elemento do seu conjunto deve ser separado por ; (ponto-e-vírgula)'))
+  display(HTML(r'Cada elemento do seu conjunto deve ser separado por ; (ponto-e-vírgula)'))
   display(wInputs, wButtons, output)
 
   def on_button_run_clicked(_):
