@@ -59,7 +59,7 @@ EXAMPLES['q1'] = {
     'input_conclusion_pt' : 'dólar não subiu.',
     'input_assumptions_en': ['Se o dólar sobe, então os produtos ficam mais caros.',
                                 'Os produtos não ficaram mais caros.'], 
-    'input_conclusion_en' : 'dólar não subiu.',
+    'input_conclusion_en' : 'O dólar não subiu.',
     'result_value': True
     }
 
