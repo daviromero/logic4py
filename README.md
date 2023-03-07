@@ -11,6 +11,7 @@ You must install:
 - graphviz
 - ipywidgets
 - pandas
+- ruamel.yaml
 
 ## Install
 
