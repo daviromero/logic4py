@@ -97,6 +97,7 @@ class ParserDefFormula():
     ERROR_NUM_NOT_DEFINED_BEFORE = 1
     ERROR_NUM_LINE_IS_ALREADY_DEFINED = 2
     ERROR_FORMULA_IS_NOT_VALID_FOR_RULE = 3
+    ERROR_FORMULA_IS_NOT_VALID_FOR_RULE_BINARY = 4
     def __init__(self, state):
         self.state = state
         self.pg = ParserGenerator(
@@ -248,6 +249,21 @@ class ParserDefFormula():
                 else:
                   self.set_error(ParserDefFormula.ERROR_FORMULA_IS_NOT_VALID_FOR_RULE, line_error, formula.toString())
 
+        @self.pg.production('step : NUM DOT formula DEF_AND NUM')
+        @self.pg.production('step : NUM DOT formula DEF_OR NUM')
+        @self.pg.production('step : NUM DOT formula DEF_IMPLIE NUM')
+        @self.pg.production('step : NUM DOT formula DEF_IFF NUM')
+        def step(p):
+            number_line = p[0].value
+            formula = p[2][1]
+
+            source_position = p[0].getsourcepos()
+            line_error = source_position.lineno
+
+            self.symbol_table[number_line] = [formula]
+            self.set_error(ParserDefFormula.ERROR_FORMULA_IS_NOT_VALID_FOR_RULE_BINARY, line_error, number_line)
+            return
+
 
         @self.pg.production('formula : EXT formula')
         @self.pg.production('formula : ALL formula')
@@ -356,6 +372,8 @@ class ParserDefFormula():
             self.error['messages'].append("A linha {} não foi definida anteriormente a linha {}:\n  {}".format(token_error, line_error, productions[line_error-1]))
         elif type == ParserDefFormula.ERROR_FORMULA_IS_NOT_VALID_FOR_RULE:
             self.error['messages'].append("A fórmula {} na linha {} não é uma conclusão válida para a regra definida com a linha referenciada:\n  {}".format(token_error, line_error, productions[line_error-1]))
+        elif type == ParserDefFormula.ERROR_FORMULA_IS_NOT_VALID_FOR_RULE_BINARY:
+            self.error['messages'].append("A fórmula {} na linha {} é uma fórmula com conectivo binário e portanto devem ser referenciada duas linhas:\n  {}".format(token_error, line_error, productions[line_error-1]))
             
     def get_parser(self):
         return self.pg.build()
