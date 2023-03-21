@@ -681,7 +681,7 @@ def display_truth_table(input_string='', language_pt=True):
       try:
           formula = get_formula(input.value)
           if(formula!=None):
-              display(truth_table(formula, show_subformulas=cSubformulas.value,parentheses=cParentheses.value).style.hide_index())
+              display(truth_table(formula, show_subformulas=cSubformulas.value,parentheses=cParentheses.value).style.hide(axis='index'))
           else:
             display(HTML(r'<b><font color="red">A definição da fórmula não está correta, verifique se todas regras foram aplicadas corretamente. Lembre-se que uma fórmula é definida pela seguinte BNF: F :== P | ~ P | P & Q | P | Q | P -> Q | P <-> Q | (P), onde P,Q (em caixa alta) são átomos.</font>'))
       except ValueError:
@@ -762,7 +762,7 @@ def display_truth_table_consequence_logic(input_string='', language_pt=True):
                 display(HTML(r'<b><font color="blue">O teorema é válido!</font>'))
                 if(cTabelaVerdade.value):
                   df = truth_table(conclusion,premises=premises, show_subformulas=cSubformulas.value,parentheses=cParentheses.value)
-                  display(df.style.hide_index())
+                  display(df.style.hide(axis='index'))
               else:
                 display(HTML(fr'<b><font color="red">O teorema é inválido. A linha {result} da Tabela-Verdade abaixo é um contraexemplo.</font>'))  
                 df = truth_table(conclusion,premises=premises, show_subformulas=cSubformulas.value,parentheses=cParentheses.value)                
