@@ -740,7 +740,7 @@ def truth_table(formula, premises=[], show_subformulas=True,parentheses=False):
 #  df_columns = sorted(df.columns,key=len)
   df = df.reindex(columns=sorted(df.columns,key=len))
  # df.columns = df_columns  
-  df.head().style.hide_index()
+  df.head().style.hide(axis='index')
   return df
 
 def consequence_logic(formula, premises=[], show_subformulas=True,parentheses=False):
