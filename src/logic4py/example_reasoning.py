@@ -31,7 +31,7 @@ EXAMPLES['q4_ex'] = {
     'input_assumptions_en': ['If the train was late and there was no cab at the station, then John would be late for his appointment.',
                                 'John was not late for his appointment.','The train arrived late.'],
     'input_conclusion_en' : 'There was a cab at the station.',
-    'result_value': False
+    'result_value': True
     }
 
 EXAMPLES['q5_ex'] = {  
@@ -81,7 +81,7 @@ EXAMPLES['q4'] = {
     'input_assumptions_pt': ['Se o dólar sobe, então os produtos ficam mais caros.',
                                 'O dólar não subiu.'], 
     'input_conclusion_pt' : 'Os produtos não ficaram mais caros.',
-    'result_value': True
+    'result_value': False
     }
 
 EXAMPLES['q5'] = {  
