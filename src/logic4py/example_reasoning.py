@@ -261,10 +261,10 @@ def to_aiken(input_assumptions, input_conclusion, result_value=False, language_p
     for s in input_assumptions:
         result+=f' {i}. '+s
         i+=1
-    result+= f' Podemos concluir que a afirmação a seguir segue logicamente das afirmações anteriores?' if language_pt else 'Can we conclude that the following statement follows logically from the previous statements?'
+    result+= f' Podemos concluir que a afirmação a seguir segue logicamente das afirmações anteriores?' if language_pt else ' Can we conclude that the following statement follows logically from the previous statements?'
     result+=f' {i}.'+input_conclusion
     result+="\nA) Sim" if language_pt else "\nA) Yes"
     result+="\nB) Não" if language_pt else "\nB) No"
+    result+="ANSWER: "+ ("A" if result_value else "B")
     return result
 
-#   print("ANSWER: "+ ("A" if EXAMPLES[f'q{k+1}']['result_value'] else "B"))  
