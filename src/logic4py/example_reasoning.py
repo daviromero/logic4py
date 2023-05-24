@@ -265,6 +265,6 @@ def to_aiken(input_assumptions, input_conclusion, result_value=False, language_p
     result+=f' {i}.'+input_conclusion
     result+="\nA) Sim" if language_pt else "\nA) Yes"
     result+="\nB) Não" if language_pt else "\nB) No"
-    result+="ANSWER: "+ ("A" if result_value else "B")
-    return result
+    result+="\nANSWER: "+ ("A" if result_value else "B")
+    return fr'{result}'
 
