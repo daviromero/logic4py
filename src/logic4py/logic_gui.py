@@ -845,9 +845,9 @@ def display_truth_formulas(formulas, universe=set(), s={}, preds={}, language_pt
         else:
           display(HTML(fr'<b>- Variables:</b> {", ".join(["<b>"+x_key+"</b>="+x_values for x_key, x_values in s.items()])}'))
       if language_pt:
-        display(HTML(fr'<b>Marque as fórmulas abaixo que são verdadeiras para o grafo acima:</b>'))
+        display(HTML(fr'<b>Marque as fórmulas abaixo que são verdadeiras para a interpretação acima:</b>'))
       else:
-        display(HTML(fr'<b>Check the formulas below which are true for the above graph:</b>'))
+        display(HTML(fr'<b>Check the formulas below which are true for the above interpretation:</b>'))
       display(*tuple(cFormulas + [run, output]))
       l_formulas = [get_formula(f) for f in formulas]
   except ValueError:
