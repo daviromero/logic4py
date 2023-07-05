@@ -3,7 +3,7 @@ from IPython.display import display, Markdown, HTML
 from logic4py.parser_formula import get_formula
 from logic4py.parser_theorem import get_theorem
 from logic4py.parser_def_formula import check_proof
-from logic4py.formula import get_atoms, v_bar, get_vs, consequence_logic, truth_table, is_falsiable, is_unsatisfiable, is_satisfiable, is_valid, sat, is_countermodel, get_signature_predicates, get_propositional_atoms, get_signature_propositional_atoms
+from logic4py.formula import get_atoms, v_bar, get_vs, consequence_logic, truth_table, is_falsiable, is_unsatisfiable, is_satisfiable, is_valid, sat, is_countermodel, get_signature_predicates, get_propositional_atoms, get_signature_propositional_atoms, is_valid_interpretation
 from logic4py.decoder import decode_fo_interpretation
 from logic4py.example_reasoning import EXAMPLES
 from random import randrange
@@ -1028,6 +1028,66 @@ def display_countermodel_decoder(input_theorem, input_interpretation = '', heigh
             display(HTML(fr'<b><font color="red">Infelizmente, você errou a questão! A interpretação não é um contraexemplo para o teorema {input_theorem}!</font>'))  
           else:
             display(HTML(fr'<b><font color="red">Unfortunately, you got the question wrong. The interpretation is not a countermodel of the theorem {input_theorem}!</font>'))  
+      except ValueError as error:
+        display(HTML(fr'<b><font color="red">{error}</font>'))   
+      else:
+          pass
+  run.on_click(on_button_run_clicked)
+
+
+def display_valid_model_decoder(input_theorem, input_interpretation = '', height_layout='140px', language_pt=True):
+  layout = widgets.Layout(width='90%', height=height_layout)
+  output = widgets.Output()
+  run = widgets.Button(description="Verificar" if language_pt else "Check")
+  input = widgets.Textarea(
+      value=input_interpretation,
+      placeholder='Digite a interpretação' if language_pt else 'Enter the interpretation',
+      description='',
+      layout=layout
+      )
+  if language_pt:
+    display(HTML(fr'<b>Apresente uma interpretação para o teorema {input_theorem} que torne verdadeira a conclusão e cada uma das premissas.'))
+  else:
+    display(HTML(fr'<b>Define an interpretation for the theorem {input_theorem} that the conclusion and every premise are true.')) 
+  premises, conclusion = get_theorem(input_theorem)
+  signature_preds = get_signature_predicates(conclusion, premises)
+  l_preds = sorted(list(signature_preds.keys()))
+  if input_interpretation=='':
+    if language_pt:
+      input_string = "# Defina o conjunto universo:\nU = {}\n# Defina os predicados:"
+    else: 
+      input_string = "# Set the universe set:\nU = {}\n# Set the Predicates:"
+    for p in l_preds:
+        for arity in signature_preds[p]:
+          input_string+=f"\n{p} = "+"{("+','.join([' ' for x in range(arity)])+")}"
+    free_variables = conclusion.free_variables()
+    for prem in premises:
+      free_variables = free_variables.union(prem.free_variables())
+    free_variables=sorted(list(free_variables))
+    if len(free_variables)>0:
+      if language_pt:
+        input_string += "\n# Defina as variáveis:"
+      else: 
+        input_string += "\n# Set the variables:"
+      for x in free_variables:
+        input_string+=f"\n{x} = "
+    input.value = input_string
+  display(input, run, output)
+  def on_button_run_clicked(_):
+    output.clear_output()
+    with output:
+      try:
+        universe, preds, s  = decode_fo_interpretation(input.value)
+        if is_valid_interpretation(premises,conclusion,universe,s, preds):
+          if language_pt:
+            display(HTML(fr'<b><font color="blue">Parabéns, a interpretração acima é uma interpretação válida para o teorema {input_theorem}!</font>'))
+          else:
+            display(HTML(fr'<b><font color="blue">Congratulations, the interpretation is a valid interpretation for the theorem {input_theorem}!</font>'))              
+        else:
+          if language_pt:
+            display(HTML(fr'<b><font color="red">Infelizmente, você errou a questão! A interpretação não é uma interpretação válida para o teorema {input_theorem}!</font>'))  
+          else:
+            display(HTML(fr'<b><font color="red">Unfortunately, you got the question wrong. The interpretation is not a valid interpretation for the theorem {input_theorem}!</font>'))  
       except ValueError as error:
         display(HTML(fr'<b><font color="red">{error}</font>'))   
       else:

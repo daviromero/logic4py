@@ -5,6 +5,8 @@ def decode_fo_interpretation(input_fo_interpretatio, universe_key='U'):
   yaml = ruamel.yaml.YAML(typ='safe')
   data = yaml.load(data_fo_interpretatio)
   U = set([str(s) for s in data[universe_key]])
+  if len(U)==0: 
+    raise ValueError(f'O conjunto universo não pode ser vazio.')
   preds = {}
   s = {}
   for key in data.keys():

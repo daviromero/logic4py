@@ -630,6 +630,12 @@ def is_countermodel(premises, conclusion,u,s,preds):
       return False
   return False if sat(conclusion, u, s,preds) else True
 
+def is_valid_interpretation(premises, conclusion,u,s,preds):
+  for p in premises:
+    if not sat(p, u,s,preds):
+      return False
+  return sat(conclusion, u, s,preds)
+
 
 def sat(formula, u, s, preds):
   """" Função que testa se uma fórmula f é satisfeita em um interpretação com o universo u, predicados preds e interpretação de variáveis s.
