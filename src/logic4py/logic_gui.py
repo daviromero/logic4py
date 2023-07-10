@@ -639,6 +639,7 @@ def display_formula_property(input_formula='', parentheses=False, language_pt=Tr
 
   def on_button_run_clicked(_):
     output.clear_output()
+    run.disabled=True
     with output:
       erro = False
       if(is_satisfiable(formula)!=cSat.value):
@@ -677,6 +678,7 @@ def display_truth_table(input_string='', language_pt=True):
 
   def on_button_run_clicked(_):
     output.clear_output()
+    run.disabled=True
     with output:
       try:
           formula = get_formula(input.value)
@@ -723,6 +725,7 @@ def display_formula_is_true(input_formula='', v=None, parentheses=False, respons
 
   def on_button_run_clicked(_):
     output.clear_output()
+    run.disabled=True
     with output:
       if(v_bar(formula,v)!=cTrue.value):
         erro = True
@@ -753,6 +756,7 @@ def display_truth_table_consequence_logic(input_string='', language_pt=True):
 
   def on_button_run_clicked(_):
     output.clear_output()
+    run.disabled=True
     with output:
       try:
           premises, conclusion = get_theorem(input.value)
@@ -861,6 +865,7 @@ def display_truth_formulas(formulas, universe=set(), s={}, preds={}, language_pt
 
   def on_button_run_clicked(_):
     output.clear_output()
+    run.disabled=True
     with output:
       erro = False
       erro_formulas = []
@@ -908,6 +913,12 @@ def display_graph_truth_formulas(formulas, arcs, universe=None, s={}, parenthese
         display(HTML(fr"- <b>Conjunto universo:</b> {'{'+', '.join(sorted(list(universe)))+'}'}"))
       else:
         display(HTML(fr"- <b>Universe set:</b> {'{'+', '.join(sorted(list(universe)))+'}'}"))
+      for p_key, p_values in preds.items():
+        s_values = '{'+', '.join(['('+','.join([k for k in r])+')' if type(r)==tuple else '('+r+')' for r in sorted(list(p_values))])+'}'
+        if language_pt:
+          display(HTML(fr'<b>- Arcos {p_key[0]}</b>= {s_values}')) 
+        else:
+          display(HTML(fr'<b>- Arcs {p_key[0]}=</b> {s_values}')) 
 
       display(visualiza_relacao(universe, arcs))
       if len(s)>0:
@@ -933,6 +944,7 @@ def display_graph_truth_formulas(formulas, arcs, universe=None, s={}, parenthese
 
   def on_button_run_clicked(_):
     output.clear_output()
+    run.disabled=True
     with output:
       erro = False
       erro_formulas = []
@@ -1015,6 +1027,7 @@ def display_countermodel_decoder(input_theorem, input_interpretation = '', heigh
   display(input, run, output)
   def on_button_run_clicked(_):
     output.clear_output()
+    run.disabled=True
     with output:
       try:
         universe, preds, s  = decode_fo_interpretation(input.value)
@@ -1075,6 +1088,7 @@ def display_valid_model_decoder(input_theorem, input_interpretation = '', height
   display(input, run, output)
   def on_button_run_clicked(_):
     output.clear_output()
+    run.disabled=True
     with output:
       try:
         universe, preds, s  = decode_fo_interpretation(input.value)
