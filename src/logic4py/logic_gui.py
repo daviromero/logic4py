@@ -890,14 +890,14 @@ def display_truth_formulas(formulas, universe=set(), s={}, preds={}, language_pt
         display(HTML(f'{s_formulas}'))  
   run.on_click(on_button_run_clicked)
 
-def display_graph_truth_formulas(formulas, arcs, universe=None, s={}, parentheses=False, language_pt=True):
+def display_graph_truth_formulas(formulas, edges, universe=None, s={}, parentheses=False, language_pt=True):
   run = widgets.Button(description="Verificar") if language_pt else widgets.Button(description="Check")
   cFormulas = [widgets.Checkbox(value=False, description=f) for f in formulas]
   output = widgets.Output()
   
   try:
       preds={}
-      preds['E',2]= arcs
+      preds['E',2]= edges
       if language_pt:
         display(HTML(fr'<b>Considere o seguinte grafo:'))
       else:
@@ -905,7 +905,7 @@ def display_graph_truth_formulas(formulas, arcs, universe=None, s={}, parenthese
         
       if universe==None:
         universe = set()
-        for (x,y) in arcs:
+        for (x,y) in edges:
           universe.add(x)
           universe.add(y)      
           
@@ -918,9 +918,8 @@ def display_graph_truth_formulas(formulas, arcs, universe=None, s={}, parenthese
         if language_pt:
           display(HTML(fr'<b>- Arcos {p_key[0]}</b>= {s_values}')) 
         else:
-          display(HTML(fr'<b>- Arcs {p_key[0]}=</b> {s_values}')) 
+          display(HTML(fr'<b>- Edges {p_key[0]}=</b> {s_values}')) 
 
-      display(visualiza_relacao(universe, arcs))
       if len(s)>0:
         if language_pt:
           display(HTML(fr'<b>- <b>Variáveis:</b> {", ".join([x_key+"="+x_values for x_key, x_values in s.items()])}'))
@@ -930,6 +929,7 @@ def display_graph_truth_formulas(formulas, arcs, universe=None, s={}, parenthese
         display(HTML(fr'<b>Marque as fórmulas abaixo que são verdadeiras para o grafo acima:'))
       else:
         display(HTML(fr'<b>Check the formulas below which are true for the above graph:'))
+      display(visualiza_relacao(universe, edges))
 
       display(*tuple(cFormulas + [run, output]))
       l_formulas = [get_formula(f) for f in formulas]
