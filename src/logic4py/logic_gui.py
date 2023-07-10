@@ -925,11 +925,11 @@ def display_graph_truth_formulas(formulas, edges, universe=None, s={}, parenthes
           display(HTML(fr'<b>- <b>Variáveis:</b> {", ".join([x_key+"="+x_values for x_key, x_values in s.items()])}'))
         else:
           display(HTML(fr'<b>- <b>Variables:</b> {", ".join([x_key+"="+x_values for x_key, x_values in s.items()])}'))
+      display(visualiza_relacao(universe, edges))
       if language_pt:
         display(HTML(fr'<b>Marque as fórmulas abaixo que são verdadeiras para o grafo acima:'))
       else:
         display(HTML(fr'<b>Check the formulas below which are true for the above graph:'))
-      display(visualiza_relacao(universe, edges))
 
       display(*tuple(cFormulas + [run, output]))
       l_formulas = [get_formula(f) for f in formulas]
