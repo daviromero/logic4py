@@ -227,7 +227,7 @@ class AtomFormula():
       return False
     
     def replace(self, atom, formula):
-      if self.key==atom:
+      if self.key!=atom:
         return self
       else:
         return formula
