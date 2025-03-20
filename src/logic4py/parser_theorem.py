@@ -186,12 +186,12 @@ def theorem_toString(premisses,conclusion,parentheses=False, symbol_vdash=True):
 def theorem_toLatex(premisses,conclusion,parentheses=False, symbol_vdash=True):
     return ParserTheorem.toLatex(premisses,conclusion,parentheses=parentheses,symbol_vdash=symbol_vdash)
 
-def replace(input_theorem, dict_atoms):
+def replace_theorem(input_theorem, dict_atoms):
   premisses, conclusion = get_theorem(input_theorem)
   conclusion = conclusion.replace(dict_atoms)
   premisses = [p.replace(dict_atoms) for p in premisses]
   return premisses, conclusion
 
-def replace_toString(input_theorem, dict_atoms):
-  premisses, conclusion = replace(input_theorem, dict_atoms)
+def replace_theorem_toString(input_theorem, dict_atoms):
+  premisses, conclusion = replace_theorem(input_theorem, dict_atoms)
   return theorem_toString(premisses, conclusion)
