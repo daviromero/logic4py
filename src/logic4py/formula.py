@@ -303,7 +303,7 @@ class PredicateFormula():
       if self.name not in dict_preds.keys():
         return self
       else:
-        return PredicateFormula(dict_preds[self.key], self.variables)
+        return PredicateFormula(dict_preds[self.name], self.variables)
 
 class QuantifierFormula():
     def __init__(self, forAll = True, variable=None, formula=None):
