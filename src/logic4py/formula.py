@@ -93,7 +93,7 @@ class BinaryFormula():
     def is_first_order_formula(self):
       return self.left.is_first_order_formula() or self.right.is_first_order_formula()
 
-    def replace(self, dict_atoms={}, dict_preds={}):
+    def replace(self, dict_atoms=dict(), dict_preds=dict()):
       return BinaryFormula(self.key, self.left.replace(dict_atoms, dict_preds), self.right.replace(dict_atoms, dict_preds))
 
 class AndFormula(BinaryFormula):
@@ -174,7 +174,7 @@ class NegationFormula():
     def is_first_order_formula(self):
       return self.formula.is_first_order_formula()
 
-    def replace(self, dict_atoms={}, dict_preds={}):
+    def replace(self, dict_atoms=dict(), dict_preds=dict()):
       return NegationFormula(self.formula.replace(dict_atoms, dict_preds))
 
 
@@ -226,7 +226,7 @@ class AtomFormula():
     def is_first_order_formula(self):
       return False
     
-    def replace(self, dict_atoms={}, dict_preds={}):
+    def replace(self, dict_atoms=dict(), dict_preds=dict()):
       if self.key not in dict_atoms.keys():
         return self
       else:
@@ -299,7 +299,7 @@ class PredicateFormula():
     def is_first_order_formula(self):
       return True
 
-    def replace(self, dict_atoms={}, dict_preds={}):
+    def replace(self, dict_atoms=dict(), dict_preds=dict()):
       if self.key not in dict_preds.keys():
         return self
       else:
@@ -410,7 +410,7 @@ class QuantifierFormula():
     def is_first_order_formula(self):
       return True
 
-    def replace(self, dict_atoms={}, dict_preds={}):
+    def replace(self, dict_atoms=dict(), dict_preds=dict()):
       return QuantifierFormula(self.forAll, self.variable, self.formula.replace(dict_atoms, dict_preds))
 
 
