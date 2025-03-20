@@ -1,6 +1,7 @@
 import traceback
 from rply import ParserGenerator
-from logic4py.formula import AtomFormula, PredicateFormula, NegationFormula, BinaryFormula, AndFormula, OrFormula, ImplicationFormula, BiImplicationFormula, QuantifierFormula, ExistentialFormula, UniversalFormula, get_formula
+from logic4py.formula import AtomFormula, PredicateFormula, NegationFormula, BinaryFormula, AndFormula, OrFormula, ImplicationFormula, BiImplicationFormula, QuantifierFormula, ExistentialFormula, UniversalFormula
+from logic4py.parser_formula import get_formula
 from logic4py.lexer import Lexer
 
 # Parser of Theorem
