@@ -93,8 +93,8 @@ class BinaryFormula():
     def is_first_order_formula(self):
       return self.left.is_first_order_formula() or self.right.is_first_order_formula()
 
-    def replace(self, dict_atoms):
-      return BinaryFormula(self.key, self.left.replace(dict_atoms), self.right.replace(dict_atoms))
+    def replace(self, dict_atoms={}, dict_preds={}):
+      return BinaryFormula(self.key, self.left.replace(dict_atoms, dict_preds), self.right.replace(dict_atoms, dict_preds))
 
 class AndFormula(BinaryFormula):
     def __init__(self, left = None, right = None):
@@ -174,8 +174,8 @@ class NegationFormula():
     def is_first_order_formula(self):
       return self.formula.is_first_order_formula()
 
-    def replace(self, atom, formula):
-      return NegationFormula(self.formula.replace(atom, formula))
+    def replace(self, dict_atoms={}, dict_preds={}):
+      return NegationFormula(self.formula.replace(dict_atoms, dict_preds))
 
 
 class AtomFormula():
@@ -226,7 +226,7 @@ class AtomFormula():
     def is_first_order_formula(self):
       return False
     
-    def replace(self, dict_atoms):
+    def replace(self, dict_atoms={}, dict_preds={}):
       if self.key not in dict_atoms.keys():
         return self
       else:
@@ -299,8 +299,11 @@ class PredicateFormula():
     def is_first_order_formula(self):
       return True
 
-    def replace(self, dict_atoms):
-      return self
+    def replace(self, dict_atoms={}, dict_preds={}):
+      if self.key not in dict_preds.keys():
+        return self
+      else:
+        return dict_preds[self.key]
 
 class QuantifierFormula():
     def __init__(self, forAll = True, variable=None, formula=None):
@@ -407,8 +410,8 @@ class QuantifierFormula():
     def is_first_order_formula(self):
       return True
 
-    def replace(self, dict_atoms):
-      return QuantifierFormula(self.forAll, self.variable, self.formula.replace(dict_atoms))
+    def replace(self, dict_atoms={}, dict_preds={}):
+      return QuantifierFormula(self.forAll, self.variable, self.formula.replace(dict_atoms, dict_preds))
 
 
 class UniversalFormula(QuantifierFormula):

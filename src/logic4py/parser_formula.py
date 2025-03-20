@@ -153,7 +153,7 @@ def get_formula(input_formula=''):
         return None
         pass
 
-def replace_formula_toString(input_formula, dict_atoms):
+def replace_formula_toString(input_formula, dict_atoms={}, dict_preds={}):
   dict_atoms_new = {}
   for a in dict_atoms.keys():
     if isinstance(dict_atoms[a],str):
@@ -161,4 +161,4 @@ def replace_formula_toString(input_formula, dict_atoms):
     else:
       dict_atoms_new[a] = dict_atoms[a]
   f = get_formula(input_formula)
-  return f.replace(dict_atoms_new).toString()
+  return f.replace(dict_atoms=dict_atoms_new,dict_preds=dict_preds).toString()
