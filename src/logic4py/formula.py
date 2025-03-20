@@ -300,7 +300,7 @@ class PredicateFormula():
       return True
 
     def replace(self, dict_atoms=dict(), dict_preds=dict()):
-      if self.key not in dict_preds.keys():
+      if self.name not in dict_preds.keys():
         return self
       else:
         return dict_preds[self.key]
