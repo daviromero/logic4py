@@ -152,3 +152,7 @@ def get_formula(input_formula=''):
     else:
         return None
         pass
+
+def replace_formula_toString(input_formula, dict_atoms):
+  f = get_formula(input_formula)
+  return f.replace(dict_atoms).toString()
