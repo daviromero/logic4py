@@ -155,7 +155,7 @@ class ParserTheorem():
 
     @staticmethod
     def toString(premisses,conclusion,parentheses=False, symbol_vdash=True):
-      symbol = '|- ' if symbol_vdash else '|= '
+      symbol = ' |- ' if symbol_vdash else ' |= '
       if (premisses==[]):
         return symbol+conclusion.toString(parentheses=parentheses)
       else:
