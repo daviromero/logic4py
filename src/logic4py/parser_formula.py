@@ -154,5 +154,11 @@ def get_formula(input_formula=''):
         pass
 
 def replace_formula_toString(input_formula, dict_atoms):
+  dict_atoms_new = {}
+  for a in dict_atoms.keys():
+    if isinstance(dict_atoms[a],str):
+      dict_atoms_new[a] = get_formula(dict_atoms[a])
+    else:
+      dict_atoms_new[a] = dict_atoms[a]
   f = get_formula(input_formula)
-  return f.replace(dict_atoms).toString()
+  return f.replace(dict_atoms_new).toString()

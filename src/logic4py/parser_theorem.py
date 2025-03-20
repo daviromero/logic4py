@@ -187,9 +187,15 @@ def theorem_toLatex(premisses,conclusion,parentheses=False, symbol_vdash=True):
     return ParserTheorem.toLatex(premisses,conclusion,parentheses=parentheses,symbol_vdash=symbol_vdash)
 
 def replace_theorem(input_theorem, dict_atoms):
+  dict_atoms_new = {}
+  for a in dict_atoms.keys():
+    if isinstance(dict_atoms[a],str):
+      dict_atoms_new[a] = get_formula(dict_atoms[a])
+    else:
+      dict_atoms_new[a] = dict_atoms[a]
   premisses, conclusion = get_theorem(input_theorem)
-  conclusion = conclusion.replace(dict_atoms)
-  premisses = [p.replace(dict_atoms) for p in premisses]
+  conclusion = conclusion.replace(dict_atoms_new)
+  premisses = [p.replace(dict_atoms_new) for p in premisses]
   return premisses, conclusion
 
 def replace_theorem_toString(input_theorem, dict_atoms):
