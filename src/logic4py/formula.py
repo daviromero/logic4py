@@ -93,8 +93,8 @@ class BinaryFormula():
     def is_first_order_formula(self):
       return self.left.is_first_order_formula() or self.right.is_first_order_formula()
 
-    def replace(self, atom, formula):
-      return BinaryFormula(self.key, self.left.replace(atom, formula), self.right.replace(atom, formula))
+    def replace(self, dict_atoms):
+      return BinaryFormula(self.key, self.left.replace(dict_atoms), self.right.replace(dict_atoms))
 
 class AndFormula(BinaryFormula):
     def __init__(self, left = None, right = None):
@@ -226,11 +226,11 @@ class AtomFormula():
     def is_first_order_formula(self):
       return False
     
-    def replace(self, atom, formula):
-      if self.key!=atom:
+    def replace(self, dict_atoms):
+      if self.key not in dict_atoms.keys():
         return self
       else:
-        return formula
+        return dict_atoms[self.key]
 
 
 class BottonFormula(AtomFormula):
@@ -299,7 +299,7 @@ class PredicateFormula():
     def is_first_order_formula(self):
       return True
 
-    def replace(self, atom, formula):
+    def replace(self, dict_atoms):
       return self
 
 class QuantifierFormula():
@@ -407,8 +407,8 @@ class QuantifierFormula():
     def is_first_order_formula(self):
       return True
 
-    def replace(self, atom, formula):
-      return QuantifierFormula(self.forAll, self.variable, self.formula.replace(atom, formula))
+    def replace(self, dict_atoms):
+      return QuantifierFormula(self.forAll, self.variable, self.formula.replace(dict_atoms))
 
 
 class UniversalFormula(QuantifierFormula):
